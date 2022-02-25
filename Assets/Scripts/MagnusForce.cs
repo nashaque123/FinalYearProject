@@ -14,7 +14,7 @@ public class MagnusForce : MonoBehaviour
     {
         rigidBody = gameObject.GetComponent<Rigidbody>();
         rigidBody.angularVelocity = new Vector3(-5, 0, 0);
-        rigidBody.velocity = new Vector3(3, 0.1f, 5);
+        rigidBody.velocity = new Vector3(3f, 0.1f, 5f);
         //rigidBody.AddForce(100, 10, 100);
     }
 
@@ -22,11 +22,11 @@ public class MagnusForce : MonoBehaviour
     void Update()
     {
         Vector3 vortexStrength = 2f * pi * GetComponent<SphereCollider>().radius * GetComponent<SphereCollider>().radius * rigidBody.angularVelocity;
-        Vector3 lift = airDensity * Vector3.Cross(airVelocity, vortexStrength);
+        Vector3 lift = airDensity * new Vector3(airVelocity.x * vortexStrength.x, airVelocity.y * vortexStrength.y, airVelocity.z * vortexStrength.z);
         Vector3 force = GetComponent<SphereCollider>().radius * pi * lift / 2;
         rigidBody.AddForce(force);
         //Vector3 acceleration = force / rigidBody.mass;
         //rigidBody.velocity += acceleration;
-        Debug.Log(lift);
+        Debug.Log(rigidBody.velocity);
     }
 }
