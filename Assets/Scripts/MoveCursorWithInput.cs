@@ -25,11 +25,11 @@ public class MoveCursorWithInput : MonoBehaviour
 
     private void ProcessHorizontalInput()
     {
-        if (Input.GetAxis("HorizontalRightAnalogStick") > 0.5)
+        if (Input.GetAxis("HorizontalRightAnalogStick") > 0.5f)
         {
             _newPos = new Vector3(transform.position.x + _kMovementStepSize, transform.position.y, 0);
         }
-        else if (Input.GetAxis("HorizontalRightAnalogStick") < -0.5)
+        else if (Input.GetAxis("HorizontalRightAnalogStick") < -0.5f)
         {
             _newPos = new Vector3(transform.position.x - _kMovementStepSize, transform.position.y, 0);
         }

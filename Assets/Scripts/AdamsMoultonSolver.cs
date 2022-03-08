@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class AdamsMoultonSolver : MonoBehaviour
 {
-    private Vector3 _velocity = new Vector3(0.7f, 0.9f, 1.3f);
+    private Vector3 _velocity = new Vector3(0.2f, 0.9f, 1.3f);
     private readonly float _kGravity = -0.1635f; // 9.81 / 60fps
     private float _posX, _posY, _posZ;
     private readonly float _kMass = 0.450f;
     private MagnusForce magnusForce;
     public BooleanScriptableObject ShotTaken;
+    public BooleanScriptableObject BallInMotion;
+    public GameObject AimArrow;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +27,14 @@ public class AdamsMoultonSolver : MonoBehaviour
     {
         if (ShotTaken.Value)
         {
+            _velocity = CalculateBallLinearVelocity();
+            AimArrow.SetActive(false);
+            ShotTaken.Value = false;
+            BallInMotion.Value = true;
+        }
+
+        if (BallInMotion.Value)
+        {
             Move();
         }
     }
@@ -39,5 +49,13 @@ public class AdamsMoultonSolver : MonoBehaviour
         _posY = transform.position.y + _velocity.y;
         _posZ = transform.position.z + _velocity.z;
         transform.position = new Vector3(_posX, _posY, _posZ);
+    }
+
+    private Vector3 CalculateBallLinearVelocity()
+    {
+        float angleInRadians = AimArrow.transform.eulerAngles.y * 3.1415f / 180f;
+        Vector3 velocity = new Vector3(Mathf.Sin(angleInRadians), 0.9f, Mathf.Cos(angleInRadians) * 1.3f);
+
+        return velocity;
     }
 }
