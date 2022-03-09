@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveArrowWithInput : MonoBehaviour
 {
     private float _newRotationY;
-    private readonly float _kMovementStepSize = 1f;
+    private readonly float kMovementStepSize = 1f;
 
     // Update is called once per frame
     void Update()
@@ -17,11 +17,11 @@ public class MoveArrowWithInput : MonoBehaviour
     {
         if (Input.GetAxis("Horizontal") > 0.5f)
         {
-            _newRotationY = transform.eulerAngles.y + _kMovementStepSize;
+            _newRotationY = transform.eulerAngles.y + kMovementStepSize;
         }
         else if (Input.GetAxis("Horizontal") < -0.5f)
         {
-            _newRotationY = transform.eulerAngles.y - _kMovementStepSize;
+            _newRotationY = transform.eulerAngles.y - kMovementStepSize;
         }
 
         if (IsValidAngle())

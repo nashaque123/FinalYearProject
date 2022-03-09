@@ -6,7 +6,7 @@ public class MoveCursorWithInput : MonoBehaviour
 {
     private Vector3 _parentPos;
     private Rect _parentRect;
-    private readonly float _kMovementStepSize = 1f;
+    private readonly float kMovementStepSize = 1f;
     private Vector3 _newPos;
 
     // Start is called before the first frame update
@@ -27,11 +27,11 @@ public class MoveCursorWithInput : MonoBehaviour
     {
         if (Input.GetAxis("HorizontalRightAnalogStick") > 0.5f)
         {
-            _newPos = new Vector3(transform.position.x + _kMovementStepSize, transform.position.y, 0);
+            _newPos = new Vector3(transform.position.x + kMovementStepSize, transform.position.y, 0);
         }
         else if (Input.GetAxis("HorizontalRightAnalogStick") < -0.5f)
         {
-            _newPos = new Vector3(transform.position.x - _kMovementStepSize, transform.position.y, 0);
+            _newPos = new Vector3(transform.position.x - kMovementStepSize, transform.position.y, 0);
         }
 
         if (IsPointWithinBallUI(_newPos))
@@ -44,11 +44,11 @@ public class MoveCursorWithInput : MonoBehaviour
     {
         if (Input.GetAxis("VerticalRightAnalogStick") > 0.5)
         {
-            _newPos = new Vector3(transform.position.x, transform.position.y + _kMovementStepSize, 0);
+            _newPos = new Vector3(transform.position.x, transform.position.y + kMovementStepSize, 0);
         }
         else if (Input.GetAxis("VerticalRightAnalogStick") < -0.5)
         {
-            _newPos = new Vector3(transform.position.x, transform.position.y - _kMovementStepSize, 0);
+            _newPos = new Vector3(transform.position.x, transform.position.y - kMovementStepSize, 0);
         }
 
         if (IsPointWithinBallUI(_newPos))
