@@ -12,6 +12,7 @@ public class AdamsMoultonSolver : MonoBehaviour
     public BooleanScriptableObject ShotTaken;
     public BooleanScriptableObject BallInMotion;
     public GameObject AimArrow;
+    private float _angleInRadians;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,7 @@ public class AdamsMoultonSolver : MonoBehaviour
     {
         if (ShotTaken.Value)
         {
+            _angleInRadians = ConvertDegreesToRadians(AimArrow.transform.eulerAngles.y);
             _velocity = CalculateBallLinearVelocity();
             AimArrow.SetActive(false);
             ShotTaken.Value = false;
@@ -41,7 +43,7 @@ public class AdamsMoultonSolver : MonoBehaviour
 
     private void Move()
     {
-        Vector3 force = magnusForce.CalculateMagnusForce();
+        Vector3 force = magnusForce.CalculateMagnusForce(_angleInRadians);
         Vector3 magnusAcceleration = force / _kMass;
         _velocity = 0.5f * new Vector3(_velocity.x + _velocity.x + magnusAcceleration.x, _velocity.y + _velocity.y + _kGravity + magnusAcceleration.y, _velocity.z + _velocity.z + magnusAcceleration.z);
 
@@ -53,9 +55,11 @@ public class AdamsMoultonSolver : MonoBehaviour
 
     private Vector3 CalculateBallLinearVelocity()
     {
-        float angleInRadians = AimArrow.transform.eulerAngles.y * 3.1415f / 180f;
-        Vector3 velocity = new Vector3(Mathf.Sin(angleInRadians), 0.9f, Mathf.Cos(angleInRadians) * 1.3f);
+        return new Vector3(Mathf.Sin(_angleInRadians), 0.9f, Mathf.Cos(_angleInRadians) * 1.3f);
+    }
 
-        return velocity;
+    private float ConvertDegreesToRadians(float degrees)
+    {
+        return degrees * 3.1415f / 180f;
     }
 }

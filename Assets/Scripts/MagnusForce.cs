@@ -18,9 +18,9 @@ public class MagnusForce : MonoBehaviour
         _spinRatePerPixel = CalculateSpinRatePerPixel();
     }
 
-    public Vector3 CalculateMagnusForce()
+    public Vector3 CalculateMagnusForce(float angleInRadians)
     {
-        Vector3 angularVelocity = CalculateBallAngularVelocity();
+        Vector3 angularVelocity = CalculateBallAngularVelocity(angleInRadians);
         Vector3 vortexStrength = 2f * _kPi * gameObject.GetComponent<SphereCollider>().radius * gameObject.GetComponent<SphereCollider>().radius * angularVelocity;
         Vector3 lift = Air.Density * new Vector3(Air.Velocity.x * vortexStrength.x, Air.Velocity.y * vortexStrength.y, Air.Velocity.z * vortexStrength.z);
         Vector3 force = gameObject.GetComponent<SphereCollider>().radius * _kPi * lift / 2;
@@ -37,10 +37,10 @@ public class MagnusForce : MonoBehaviour
         return spinRatePerPixel;
     }
 
-    private Vector3 CalculateBallAngularVelocity()
+    private Vector3 CalculateBallAngularVelocity(float angleInRadians)
     {
         Vector3 differenceBetweenBallAndCursorOnAxes = _ballUI.position - Cursor.position;
-        Vector3 angularVelocity = _spinRatePerPixel * differenceBetweenBallAndCursorOnAxes;
+        Vector3 angularVelocity = new Vector3(_spinRatePerPixel * differenceBetweenBallAndCursorOnAxes.x * Mathf.Cos(angleInRadians), _spinRatePerPixel * differenceBetweenBallAndCursorOnAxes.y, _spinRatePerPixel * -differenceBetweenBallAndCursorOnAxes.x * Mathf.Sin(angleInRadians));
 
         return angularVelocity;
     }
