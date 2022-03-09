@@ -55,7 +55,7 @@ public class AdamsMoultonSolver : MonoBehaviour
 
     private Vector3 CalculateBallLinearVelocity(float angleInRadians)
     {
-        return new Vector3(Mathf.Sin(angleInRadians), 0.9f, Mathf.Cos(angleInRadians) * 1.3f);
+        return new Vector3(Mathf.Sin(angleInRadians), 0.5f, Mathf.Cos(angleInRadians) * 1.3f);
     }
 
     public Vector3 Velocity
