@@ -64,5 +64,10 @@ public class AdamsMoultonSolver : MonoBehaviour
         {
             return _velocity;
         }
+
+        set
+        {
+            _velocity = value;
+        }
     }
 }

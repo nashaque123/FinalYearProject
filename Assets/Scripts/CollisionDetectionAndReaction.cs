@@ -10,9 +10,6 @@ public class CollisionDetectionAndReaction : MonoBehaviour
     [SerializeField]
     private Plane[] _planes;
 
-    [Range(0.0f, 1.0f)]
-    public float CoefficientOfRestitution;
-
     // Update is called once per frame
     void Update()
     {
@@ -20,13 +17,23 @@ public class CollisionDetectionAndReaction : MonoBehaviour
 
         foreach (Plane plane in _planes)
         {
-            float contactPointMagnitude = CalculateDistanceFromBallToCollisionPointOnPlane(plane);
-
-            if (ballVelocityMagnitude >= contactPointMagnitude)
+            if (IsBallMovingTowardsPlane(plane))
             {
-                Debug.Log("collision detected");
+                float contactPointMagnitude = CalculateDistanceFromBallToCollisionPointOnPlane(plane);
+
+                if (ballVelocityMagnitude >= contactPointMagnitude)
+                {
+                    BallToPlaneReaction(plane, contactPointMagnitude);
+                }
             }
         }
+    }
+
+    private bool IsBallMovingTowardsPlane(Plane plane)
+    {
+        Vector3 negativeVelocity = -_ball.GetComponent<AdamsMoultonSolver>().Velocity;
+        float angleInRadiansBetweenNormalAndNegativeVelocity = MyMathsFunctions.CalculateAngleInRadiansBetweenVectors(plane.NormalToSurface, negativeVelocity);
+        return angleInRadiansBetweenNormalAndNegativeVelocity < 1.5707f;
     }
 
     private float CalculateClosestDistanceBetweenBallAndPlane(Plane plane)
@@ -46,5 +53,19 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         float closestDistance = CalculateClosestDistanceBetweenBallAndPlane(plane);
 
         return (closestDistance - _ball.GetComponent<SphereCollider>().radius) / Mathf.Cos(angleInRadiansBetweenVelocityAndNegativeNormal);
+    }
+
+    private void BallToPlaneReaction(Plane plane, float contactPointMagnitude)
+    {
+        //move ball to collision point before setting post collision velocity
+        float velocityMagnitudePreCollision = MyMathsFunctions.CalculateVectorMagnitude(_ball.GetComponent<AdamsMoultonSolver>().Velocity);
+        Vector3 vCol = _ball.GetComponent<AdamsMoultonSolver>().Velocity / velocityMagnitudePreCollision * contactPointMagnitude;
+        _ball.transform.position += vCol;
+
+        Vector3 unitVectorPreCollision = _ball.GetComponent<AdamsMoultonSolver>().Velocity / velocityMagnitudePreCollision;
+        float dotProductOfNormalAndNegativeUnitVector = MyMathsFunctions.CalculateDotProduct(plane.NormalToSurface, -unitVectorPreCollision);
+        Vector3 unitVectorPostCollision = (2f * dotProductOfNormalAndNegativeUnitVector * plane.NormalToSurface) + unitVectorPreCollision;
+        Vector3 velocityPostCollision = plane.CoefficientOfRestitution * velocityMagnitudePreCollision * unitVectorPostCollision;
+        _ball.GetComponent<AdamsMoultonSolver>().Velocity = velocityPostCollision;
     }
 }

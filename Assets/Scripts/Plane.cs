@@ -5,7 +5,10 @@ using UnityEngine;
 public class Plane : MonoBehaviour
 {
     private Vector3 _normalToSurface;
-    public Vector3[] Points = new Vector3[2];
+    public Vector3[] Points = new Vector3[3];
+
+    [Range(0.0f, 1.0f)]
+    public float CoefficientOfRestitution;
 
     // Start is called before the first frame update
     void Start()
