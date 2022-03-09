@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AdamsMoultonSolver : MonoBehaviour
 {
-    private Vector3 _velocity = new Vector3(0.2f, 0.9f, 1.3f);
+    private Vector3 _velocity;
     private readonly float kGravity = -0.1635f; // 9.81 / 60fps
     private float _posX, _posY, _posZ;
     private readonly float kMass = 0.450f;
@@ -27,7 +27,7 @@ public class AdamsMoultonSolver : MonoBehaviour
     {
         if (ShotTaken.Value)
         {
-            float angleInRadians = ConvertDegreesToRadians(AimArrow.transform.eulerAngles.y);
+            float angleInRadians = MyMathsFunctions.ConvertDegreesToRadians(AimArrow.transform.eulerAngles.y);
             _velocity = CalculateBallLinearVelocity(angleInRadians);
             magnusForce.CalculateBallAngularVelocity(angleInRadians);
             AimArrow.SetActive(false);
@@ -58,8 +58,11 @@ public class AdamsMoultonSolver : MonoBehaviour
         return new Vector3(Mathf.Sin(angleInRadians), 0.9f, Mathf.Cos(angleInRadians) * 1.3f);
     }
 
-    private float ConvertDegreesToRadians(float degrees)
+    public Vector3 Velocity
     {
-        return degrees * 3.1415f / 180f;
+        get
+        {
+            return _velocity;
+        }
     }
 }
