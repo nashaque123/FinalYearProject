@@ -12,6 +12,8 @@ public class AdamsMoultonSolver : MonoBehaviour
     public BooleanScriptableObject ShotTaken;
     public BooleanScriptableObject BallInMotion;
     public GameObject AimArrow;
+    public Transform Cursor;
+    private Transform _ballUI;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +22,7 @@ public class AdamsMoultonSolver : MonoBehaviour
         _posY = transform.position.y;
         _posZ = transform.position.z;
         magnusForce = gameObject.GetComponent<MagnusForce>();
+        _ballUI = Cursor.parent;
     }
 
     // Update is called once per frame
@@ -55,7 +58,9 @@ public class AdamsMoultonSolver : MonoBehaviour
 
     private Vector3 CalculateBallLinearVelocity(float angleInRadians)
     {
-        return new Vector3(Mathf.Sin(angleInRadians), 0.5f, Mathf.Cos(angleInRadians) * 1.3f);
+        float yContactPointOnBall = _ballUI.position.y - Cursor.position.y;
+        Debug.Log(Mathf.Abs(yContactPointOnBall * 0.01f));
+        return new Vector3(Mathf.Sin(angleInRadians), 0.5f + (yContactPointOnBall * 0.01f), Mathf.Cos(angleInRadians) * (1.3f - Mathf.Abs(yContactPointOnBall * 0.01f)));
     }
 
     public Vector3 Velocity

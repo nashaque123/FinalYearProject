@@ -538,6 +538,7 @@ MonoBehaviour:
   ShotTaken: {fileID: 11400000, guid: b315ddc4fc878b54cba173abd5e98b91, type: 2}
   BallInMotion: {fileID: 11400000, guid: 01b0a63109ff94f418fd6fe574b16615, type: 2}
   AimArrow: {fileID: 533303803}
+  Cursor: {fileID: 566543455}
 --- !u!96 &187155356
 TrailRenderer:
   serializedVersion: 2
