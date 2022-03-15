@@ -40,6 +40,6 @@ public class MagnusForce : MonoBehaviour
     public void CalculateBallAngularVelocity(float angleInRadians)
     {
         Vector3 differenceBetweenBallAndCursorOnAxes = _ballUI.position - Cursor.position;
-        _angularVelocity = new Vector3(_spinRatePerPixel * differenceBetweenBallAndCursorOnAxes.x * Mathf.Cos(angleInRadians), _spinRatePerPixel * 0.5f * differenceBetweenBallAndCursorOnAxes.y, _spinRatePerPixel * -differenceBetweenBallAndCursorOnAxes.x * Mathf.Sin(angleInRadians));
+        _angularVelocity = new Vector3(_spinRatePerPixel * differenceBetweenBallAndCursorOnAxes.x * Mathf.Cos(angleInRadians), _spinRatePerPixel * 0.35f * differenceBetweenBallAndCursorOnAxes.y, _spinRatePerPixel * -differenceBetweenBallAndCursorOnAxes.x * Mathf.Sin(angleInRadians));
     }
 }

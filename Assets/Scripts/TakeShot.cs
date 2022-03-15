@@ -19,7 +19,7 @@ public class TakeShot : MonoBehaviour
     void Update()
     {
         //when player presses shoot, calculate angular velocity and start movement
-        if (Input.GetKeyDown("joystick button 0"))
+        if (Input.GetKeyDown("joystick button 0") || Input.GetKeyDown("space"))
         {
             ShotTaken.Value = true;
         }
