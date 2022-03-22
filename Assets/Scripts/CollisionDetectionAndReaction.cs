@@ -59,7 +59,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
     {
         //move ball to collision point before setting post collision velocity
         float velocityMagnitudePreCollision = MyMathsFunctions.CalculateVectorMagnitude(_ball.GetComponent<AdamsMoultonSolver>().Velocity);
-        Vector3 vCol = _ball.GetComponent<AdamsMoultonSolver>().Velocity / velocityMagnitudePreCollision * contactPointMagnitude;
+        Vector3 vCol = (_ball.GetComponent<AdamsMoultonSolver>().Velocity / velocityMagnitudePreCollision) * contactPointMagnitude;
         _ball.transform.position += vCol;
 
         Vector3 unitVectorPreCollision = _ball.GetComponent<AdamsMoultonSolver>().Velocity / velocityMagnitudePreCollision;
