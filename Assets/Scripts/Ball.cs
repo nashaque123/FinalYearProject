@@ -7,6 +7,13 @@ public class Ball : MonoBehaviour
     private Vector3 _linearVelocity = new Vector3();
     private Vector3 _angularVelocity = new Vector3();
     private readonly float kMass = 0.45f;
+    private float _radius;
+
+    // Start is called before the first frame update
+    private void Start()
+    {
+        _radius = 0.5f;
+    }
 
     public Vector3 LinearVelocity
     {
@@ -39,6 +46,14 @@ public class Ball : MonoBehaviour
         get
         {
             return kMass;
+        }
+    }
+
+    public float Radius
+    {
+        get
+        {
+            return _radius;
         }
     }
 }

@@ -405,7 +405,6 @@ GameObject:
   - component: {fileID: 187155352}
   - component: {fileID: 187155351}
   - component: {fileID: 187155350}
-  - component: {fileID: 187155349}
   - component: {fileID: 187155353}
   - component: {fileID: 187155355}
   - component: {fileID: 187155356}
@@ -418,19 +417,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!135 &187155349
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187155348}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &187155350
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2958,7 +2944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 271cf4f1f86dda54f86dc63781acd869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ball: {fileID: 0}
+  _ball: {fileID: 187155357}
   _planes:
   - {fileID: 1308373571}
   - {fileID: 238891954}
@@ -4276,7 +4262,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b971400ec05bf4c822cecaef0d0274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ball: {fileID: 0}
+  Ball: {fileID: 187155357}
+  TargetGoalCollider: {fileID: 1714942651}
+  BallInMotion: {fileID: 11400000, guid: 01b0a63109ff94f418fd6fe574b16615, type: 2}
 --- !u!4 &1550006145
 Transform:
   m_ObjectHideFlags: 0

@@ -52,7 +52,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         float angleInRadiansBetweenVelocityAndNegativeNormal = MyMathsFunctions.CalculateAngleInRadiansBetweenVectors(_ball.LinearVelocity, negativeNormal);
         float closestDistance = CalculateClosestDistanceBetweenBallAndPlane(plane);
 
-        return (closestDistance - _ball.GetComponent<SphereCollider>().radius) / Mathf.Cos(angleInRadiansBetweenVelocityAndNegativeNormal);
+        return (closestDistance - _ball.Radius) / Mathf.Cos(angleInRadiansBetweenVelocityAndNegativeNormal);
     }
 
     private void BallToPlaneReaction(Plane plane, float contactPointMagnitude)

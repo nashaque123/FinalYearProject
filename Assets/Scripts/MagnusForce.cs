@@ -22,9 +22,9 @@ public class MagnusForce : MonoBehaviour
 
     public Vector3 CalculateMagnusForce()
     {
-        Vector3 vortexStrength = 2f * kPi * gameObject.GetComponent<SphereCollider>().radius * gameObject.GetComponent<SphereCollider>().radius * _ball.AngularVelocity;
+        Vector3 vortexStrength = 2f * kPi * _ball.Radius * _ball.Radius * _ball.AngularVelocity;
         Vector3 lift = Air.Density * new Vector3(Air.Velocity.x * vortexStrength.x, Air.Velocity.y * vortexStrength.y, Air.Velocity.z * vortexStrength.z);
-        Vector3 force = gameObject.GetComponent<SphereCollider>().radius * kPi * lift / 2;
+        Vector3 force = _ball.Radius * kPi * lift / 2f;
 
         return force;
     }
