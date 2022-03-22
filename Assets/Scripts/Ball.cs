@@ -12,7 +12,7 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        _radius = 0.5f;
+        _radius = transform.lossyScale.x * 0.5f;
     }
 
     public Vector3 LinearVelocity

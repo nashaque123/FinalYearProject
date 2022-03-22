@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b76ffc86f5b7d459ad854d96a3f056, type: 3}
   m_Name: Air
   m_EditorClassIdentifier: 
-  Velocity: {x: 0.1, y: 0.1, z: 0.1}
+  Velocity: {x: 2.2, y: 2.2, z: 2.2}
   Density: 1.225

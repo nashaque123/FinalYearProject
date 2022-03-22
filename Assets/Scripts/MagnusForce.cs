@@ -7,7 +7,7 @@ public class MagnusForce : MonoBehaviour
     private Ball _ball;
     private readonly float kPi = 3.1415f;
     public Air Air;
-    private readonly float kMaxRevolutionsPerSecond = 9f;
+    private readonly float kMaxRevolutionsPerSecond = 12f;
     private float _spinRatePerPixel;
     public Transform Cursor;
     private Transform _ballUI;
