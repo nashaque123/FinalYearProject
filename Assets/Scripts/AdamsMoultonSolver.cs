@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class AdamsMoultonSolver : MonoBehaviour
 {
-    private Vector3 _velocity;
+    private Ball _ball;
     private readonly float kGravity = -0.1635f; // 9.81 / 60fps
     private float _posX, _posY, _posZ;
-    private readonly float kMass = 0.450f;
     private MagnusForce magnusForce;
     public BooleanScriptableObject ShotTaken;
     public BooleanScriptableObject BallInMotion;
@@ -18,6 +17,7 @@ public class AdamsMoultonSolver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _ball = gameObject.GetComponent<Ball>();
         _posX = transform.position.x;
         _posY = transform.position.y;
         _posZ = transform.position.z;
@@ -31,7 +31,7 @@ public class AdamsMoultonSolver : MonoBehaviour
         if (ShotTaken.Value)
         {
             float angleInRadians = MyMathsFunctions.ConvertDegreesToRadians(AimArrow.transform.eulerAngles.y);
-            _velocity = CalculateBallLinearVelocity(angleInRadians);
+            _ball.LinearVelocity = CalculateBallLinearVelocity(angleInRadians);
             magnusForce.CalculateBallAngularVelocity(angleInRadians);
             AimArrow.SetActive(false);
             ShotTaken.Value = false;
@@ -47,12 +47,12 @@ public class AdamsMoultonSolver : MonoBehaviour
     private void Move()
     {
         Vector3 force = magnusForce.CalculateMagnusForce();
-        Vector3 magnusAcceleration = force / kMass;
-        _velocity = 0.5f * new Vector3(_velocity.x + _velocity.x + magnusAcceleration.x, _velocity.y + _velocity.y + kGravity + magnusAcceleration.y, _velocity.z + _velocity.z + magnusAcceleration.z);
+        Vector3 magnusAcceleration = force / _ball.Mass;
+        _ball.LinearVelocity = 0.5f * new Vector3(_ball.LinearVelocity.x + _ball.LinearVelocity.x + magnusAcceleration.x, _ball.LinearVelocity.y + _ball.LinearVelocity.y + kGravity + magnusAcceleration.y, _ball.LinearVelocity.z + _ball.LinearVelocity.z + magnusAcceleration.z);
 
-        _posX = transform.position.x + _velocity.x;
-        _posY = transform.position.y + _velocity.y;
-        _posZ = transform.position.z + _velocity.z;
+        _posX = transform.position.x + _ball.LinearVelocity.x;
+        _posY = transform.position.y + _ball.LinearVelocity.y;
+        _posZ = transform.position.z + _ball.LinearVelocity.z;
         transform.position = new Vector3(_posX, _posY, _posZ);
     }
 
@@ -60,18 +60,5 @@ public class AdamsMoultonSolver : MonoBehaviour
     {
         float yContactPointOnBall = _ballUI.position.y - Cursor.position.y;
         return new Vector3(Mathf.Sin(angleInRadians), 0.6f + (yContactPointOnBall * 0.01f), Mathf.Cos(angleInRadians) * (1.3f - Mathf.Abs(yContactPointOnBall * 0.01f)));
-    }
-
-    public Vector3 Velocity
-    {
-        get
-        {
-            return _velocity;
-        }
-
-        set
-        {
-            _velocity = value;
-        }
     }
 }

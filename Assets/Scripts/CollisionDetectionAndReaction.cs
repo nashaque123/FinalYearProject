@@ -5,7 +5,7 @@ using UnityEngine;
 public class CollisionDetectionAndReaction : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _ball;
+    private Ball _ball;
 
     [SerializeField]
     private Plane[] _planes;
@@ -13,7 +13,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float ballVelocityMagnitude = MyMathsFunctions.CalculateVectorMagnitude(_ball.GetComponent<AdamsMoultonSolver>().Velocity);
+        float ballVelocityMagnitude = MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
 
         foreach (Plane plane in _planes)
         {
@@ -31,7 +31,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
 
     private bool IsBallMovingTowardsPlane(Plane plane)
     {
-        Vector3 negativeVelocity = -_ball.GetComponent<AdamsMoultonSolver>().Velocity;
+        Vector3 negativeVelocity = -_ball.LinearVelocity;
         float angleInRadiansBetweenNormalAndNegativeVelocity = MyMathsFunctions.CalculateAngleInRadiansBetweenVectors(plane.NormalToSurface, negativeVelocity);
         return angleInRadiansBetweenNormalAndNegativeVelocity < 1.5707f;
     }
@@ -49,7 +49,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
     private float CalculateDistanceFromBallToCollisionPointOnPlane(Plane plane)
     {
         Vector3 negativeNormal = -plane.NormalToSurface;
-        float angleInRadiansBetweenVelocityAndNegativeNormal = MyMathsFunctions.CalculateAngleInRadiansBetweenVectors(_ball.GetComponent<AdamsMoultonSolver>().Velocity, negativeNormal);
+        float angleInRadiansBetweenVelocityAndNegativeNormal = MyMathsFunctions.CalculateAngleInRadiansBetweenVectors(_ball.LinearVelocity, negativeNormal);
         float closestDistance = CalculateClosestDistanceBetweenBallAndPlane(plane);
 
         return (closestDistance - _ball.GetComponent<SphereCollider>().radius) / Mathf.Cos(angleInRadiansBetweenVelocityAndNegativeNormal);
@@ -58,14 +58,14 @@ public class CollisionDetectionAndReaction : MonoBehaviour
     private void BallToPlaneReaction(Plane plane, float contactPointMagnitude)
     {
         //move ball to collision point before setting post collision velocity
-        float velocityMagnitudePreCollision = MyMathsFunctions.CalculateVectorMagnitude(_ball.GetComponent<AdamsMoultonSolver>().Velocity);
-        Vector3 vCol = (_ball.GetComponent<AdamsMoultonSolver>().Velocity / velocityMagnitudePreCollision) * contactPointMagnitude;
+        float velocityMagnitudePreCollision = MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
+        Vector3 vCol = (_ball.LinearVelocity / velocityMagnitudePreCollision) * contactPointMagnitude;
         _ball.transform.position += vCol;
 
-        Vector3 unitVectorPreCollision = _ball.GetComponent<AdamsMoultonSolver>().Velocity / velocityMagnitudePreCollision;
+        Vector3 unitVectorPreCollision = _ball.LinearVelocity / velocityMagnitudePreCollision;
         float dotProductOfNormalAndNegativeUnitVector = MyMathsFunctions.CalculateDotProduct(plane.NormalToSurface, -unitVectorPreCollision);
         Vector3 unitVectorPostCollision = (2f * dotProductOfNormalAndNegativeUnitVector * plane.NormalToSurface) + unitVectorPreCollision;
         Vector3 velocityPostCollision = plane.CoefficientOfRestitution * velocityMagnitudePreCollision * unitVectorPostCollision;
-        _ball.GetComponent<AdamsMoultonSolver>().Velocity = velocityPostCollision;
+        _ball.LinearVelocity = velocityPostCollision;
     }
 }
