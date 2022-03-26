@@ -8,11 +8,13 @@ public class Ball : MonoBehaviour
     private Vector3 _angularVelocity = new Vector3();
     private readonly float kMass = 0.45f;
     private float _radius;
+    private InertiaTensor _inertiaTensor;
 
     // Start is called before the first frame update
     private void Start()
     {
         _radius = transform.lossyScale.x * 0.5f;
+        _inertiaTensor = new InertiaTensor(kMass, _radius);
     }
 
     public Vector3 LinearVelocity
