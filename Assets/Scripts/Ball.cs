@@ -58,4 +58,12 @@ public class Ball : MonoBehaviour
             return _radius;
         }
     }
+
+    public InertiaTensor InertiaTensor
+    {
+        get
+        {
+            return _inertiaTensor;
+        }
+    }
 }

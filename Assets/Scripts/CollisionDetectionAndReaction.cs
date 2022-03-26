@@ -68,4 +68,11 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         Vector3 velocityPostCollision = plane.CoefficientOfRestitution * velocityMagnitudePreCollision * unitVectorPostCollision;
         _ball.LinearVelocity = velocityPostCollision;
     }
+
+    /*private void ImpulseCalculation()
+    {
+        Vector3 collisionNormal = _ball.LinearVelocity / MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
+        float totalInertia = Vector3.Cross(_ball.InertiaTensor.Inverse * Vector3.Cross(_ball.Radius, collisionNormal)
+        float impulse = (-(1f + 0.9f) * Vector3.Dot(_ball.LinearVelocity, collisionNormal) / ((1f / _ball.Mass) + (1f / _ball.Mass) + ));
+    }*/
 }
