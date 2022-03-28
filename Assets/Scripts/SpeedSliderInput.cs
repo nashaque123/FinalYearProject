@@ -7,6 +7,7 @@ public class SpeedSliderInput : MonoBehaviour
 {
     public Slider Slider;
     public FloatScriptableObject PlaySpeedBuffer;
+    public BooleanScriptableObject GamePlaying;
 
     // Start is called before the first frame update
     void Start()
@@ -18,14 +19,17 @@ public class SpeedSliderInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("joystick button 4") || Input.GetKeyDown("k"))
+        if (GamePlaying.Value)
         {
-            DecreaseSpeed();
-        }
+            if (Input.GetKeyDown("joystick button 4") || Input.GetKeyDown("k"))
+            {
+                DecreaseSpeed();
+            }
 
-        if (Input.GetKeyDown("joystick button 5") || Input.GetKeyDown("l"))
-        {
-            IncreaseSpeed();
+            if (Input.GetKeyDown("joystick button 5") || Input.GetKeyDown("l"))
+            {
+                IncreaseSpeed();
+            }
         }
     }
 

@@ -18,6 +18,7 @@ public class AdamsMoultonSolver : MonoBehaviour
     private readonly float kPi = 3.1415f;
     public FloatScriptableObject PlaySpeedBuffer;
     private int counter = 1;
+    public BooleanScriptableObject GamePlaying;
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +44,7 @@ public class AdamsMoultonSolver : MonoBehaviour
             BallInMotion.Value = true;
         }
 
-        if (BallInMotion.Value && counter % PlaySpeedBuffer.Value == 0)
+        if (BallInMotion.Value && counter % PlaySpeedBuffer.Value == 0 && GamePlaying.Value)
         {
             Move();
         }

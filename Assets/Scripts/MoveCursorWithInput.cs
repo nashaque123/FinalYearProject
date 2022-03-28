@@ -8,6 +8,7 @@ public class MoveCursorWithInput : MonoBehaviour
     private Rect _parentRect;
     private readonly float kMovementStepSize = 1f;
     private Vector3 _newPos;
+    public BooleanScriptableObject GamePlaying;
 
     // Start is called before the first frame update
     void Start()
@@ -19,8 +20,11 @@ public class MoveCursorWithInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ProcessHorizontalInput();
-        ProcessVerticalInput();
+        if (GamePlaying.Value)
+        {
+            ProcessHorizontalInput();
+            ProcessVerticalInput();
+        }
     }
 
     private void ProcessHorizontalInput()

@@ -6,11 +6,15 @@ public class MoveArrowWithInput : MonoBehaviour
 {
     private float _newRotationY;
     private readonly float kMovementStepSize = 1f;
+    public BooleanScriptableObject GamePlaying;
 
     // Update is called once per frame
     void Update()
     {
-        ProcessHorizontalInput();
+        if (GamePlaying.Value)
+        {
+            ProcessHorizontalInput();
+        }
     }
 
     private void ProcessHorizontalInput()
