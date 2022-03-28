@@ -69,6 +69,6 @@ public class AdamsMoultonSolver : MonoBehaviour
     private Vector3 CalculateBallLinearVelocity(float angleInRadians)
     {
         float yContactPointOnBall = _ballUI.position.y - Cursor.position.y;
-        return new Vector3(Mathf.Sin(angleInRadians), 0.6f + (yContactPointOnBall * 0.01f), Mathf.Cos(angleInRadians) * (1.3f - Mathf.Abs(yContactPointOnBall * 0.01f)));
+        return new Vector3(Mathf.Sin(angleInRadians), 0.8f + (yContactPointOnBall * 0.01f), Mathf.Cos(angleInRadians) * (1.4f - Mathf.Abs(yContactPointOnBall * 0.01f)));
     }
 }

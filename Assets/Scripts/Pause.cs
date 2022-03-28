@@ -7,9 +7,10 @@ public class Pause : MonoBehaviour
 {
     public BooleanScriptableObject GamePlaying;
     private GameObject _pauseMenuUI;
-    private Image[] _menuButtons = new Image[2];
+    private Image[] _menuButtons = new Image[3];
     private int _currentButton = 0;
     private bool _scrollingThroughMenu = false;
+    private GameObject _resultText;
 
     // Start is called before the first frame update
     void Start()
@@ -17,11 +18,15 @@ public class Pause : MonoBehaviour
         GamePlaying.Value = true;
         _pauseMenuUI = GameObject.Find("Pause Menu");
         _menuButtons[0] = GameObject.Find("Resume Button").GetComponent<Image>();
-        _menuButtons[1] = GameObject.Find("Menu Button").GetComponent<Image>();
+        _menuButtons[1] = GameObject.Find("Replay Button").GetComponent<Image>();
+        _menuButtons[2] = GameObject.Find("Menu Button").GetComponent<Image>();
+        _resultText = GameObject.Find("Result Text");
 
         _pauseMenuUI.SetActive(false);
+        _resultText.SetActive(false);
         _menuButtons[0].color = Color.magenta;
         _menuButtons[1].color = Color.white;
+        _menuButtons[2].color = Color.white;
     }
 
     // Update is called once per frame
@@ -63,7 +68,12 @@ public class Pause : MonoBehaviour
             }
             else if (_currentButton == 1)
             {
+                ReplayGame();
+            }
+            else if (_currentButton == 2)
+            {
                 //back to menu
+                Debug.Log("back to menu");
             }
         }
     }
@@ -71,7 +81,7 @@ public class Pause : MonoBehaviour
     private IEnumerator ResumeGame()
     {
         _pauseMenuUI.SetActive(false);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         GamePlaying.Value = true;
     }
 
@@ -79,6 +89,11 @@ public class Pause : MonoBehaviour
     {
         _pauseMenuUI.SetActive(true);
         GamePlaying.Value = false;
+    }
+
+    private void ReplayGame()
+    {
+
     }
 
     private IEnumerator NextButton()
@@ -104,5 +119,12 @@ public class Pause : MonoBehaviour
         _menuButtons[_currentButton].color = Color.magenta;
         yield return new WaitForSeconds(0.2f);
         _scrollingThroughMenu = false;
+    }
+
+    public void GameOver(bool didScore)
+    {
+        _resultText.GetComponent<Text>().text = didScore ? "You scored!!" : "You missed :(";
+        _resultText.SetActive(true);
+        PauseGame();
     }
 }
