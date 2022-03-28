@@ -18,10 +18,18 @@ public class GoalDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (BallInMotion && HasBallCrossedLine())
+        if (BallInMotion.Value)
         {
-            //goooooooooaaaaaaaaaaaaaaaalllllllllll
-            Debug.Log("goal scored");
+            //Debug.Log("vel mag " + MyMathsFunctions.CalculateVectorMagnitude(Ball.LinearVelocity));
+            if (HasBallCrossedLine())
+            {
+                //goooooooooaaaaaaaaaaaaaaaalllllllllll
+                StartCoroutine(DisplayResult(true));
+            }
+            else if (MyMathsFunctions.CalculateVectorMagnitude(Ball.LinearVelocity) < 0.08f)
+            {
+                StartCoroutine(DisplayResult(false));
+            }
         }
     }
 
@@ -35,5 +43,12 @@ public class GoalDetection : MonoBehaviour
         }
 
         return false;
+    }
+
+    public IEnumerator DisplayResult(bool didScore)
+    {
+        BallInMotion.Value = false;
+        yield return new WaitForSeconds(3f);
+        Debug.Log(didScore ? "winner!" : "loser!");
     }
 }
