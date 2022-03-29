@@ -20,13 +20,12 @@ public class GoalDetection : MonoBehaviour
     {
         if (BallInMotion.Value)
         {
-            //Debug.Log("vel mag " + MyMathsFunctions.CalculateVectorMagnitude(Ball.LinearVelocity));
             if (HasBallCrossedLine())
             {
                 //goooooooooaaaaaaaaaaaaaaaalllllllllll
                 StartCoroutine(DisplayResult(true));
             }
-            else if (MyMathsFunctions.CalculateVectorMagnitude(Ball.LinearVelocity) < 0.08f)
+            else if (MyMathsFunctions.CalculateVectorMagnitude(Ball.LinearVelocity) < 0.09f)
             {
                 StartCoroutine(DisplayResult(false));
             }
@@ -48,7 +47,7 @@ public class GoalDetection : MonoBehaviour
     public IEnumerator DisplayResult(bool didScore)
     {
         BallInMotion.Value = false;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         gameObject.GetComponent<Pause>().GameOver(didScore);
         //Debug.Log(didScore ? "winner!" : "loser!");
     }
