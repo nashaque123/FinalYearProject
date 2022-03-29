@@ -73,4 +73,10 @@ public class MoveCursorWithInput : MonoBehaviour
 
         return false;
     }
+
+    public void Reset()
+    {
+        transform.position = _parentPos;
+        _newPos = transform.position;
+    }
 }

@@ -11,6 +11,8 @@ public class Pause : MonoBehaviour
     private int _currentButton = 0;
     private bool _scrollingThroughMenu = false;
     private GameObject _resultText;
+    private GameObject _ball;
+    public BooleanScriptableObject BallInMotion;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +20,7 @@ public class Pause : MonoBehaviour
         GamePlaying.Value = true;
         _pauseMenuUI = GameObject.Find("Pause Menu");
         _menuButtons[0] = GameObject.Find("Resume Button").GetComponent<Image>();
-        _menuButtons[1] = GameObject.Find("Replay Button").GetComponent<Image>();
+        _menuButtons[1] = GameObject.Find("Restart Button").GetComponent<Image>();
         _menuButtons[2] = GameObject.Find("Menu Button").GetComponent<Image>();
         _resultText = GameObject.Find("Result Text");
 
@@ -27,6 +29,8 @@ public class Pause : MonoBehaviour
         _menuButtons[0].color = Color.magenta;
         _menuButtons[1].color = Color.white;
         _menuButtons[2].color = Color.white;
+
+        _ball = GameObject.Find("Ball");
     }
 
     // Update is called once per frame
@@ -68,7 +72,7 @@ public class Pause : MonoBehaviour
             }
             else if (_currentButton == 1)
             {
-                ReplayGame();
+                RestartGame();
             }
             else if (_currentButton == 2)
             {
@@ -91,9 +95,12 @@ public class Pause : MonoBehaviour
         GamePlaying.Value = false;
     }
 
-    private void ReplayGame()
+    private void RestartGame()
     {
-
+        BallInMotion.Value = false;
+        _ball.GetComponent<AdamsMoultonSolver>().Reset();
+        _ball.GetComponent<TrailRenderer>().Clear();
+        StartCoroutine(ResumeGame());
     }
 
     private IEnumerator NextButton()
@@ -114,7 +121,7 @@ public class Pause : MonoBehaviour
         _currentButton--;
 
         if (_currentButton < 0)
-            _currentButton = 1;
+            _currentButton = _menuButtons.Length - 1;
 
         _menuButtons[_currentButton].color = Color.magenta;
         yield return new WaitForSeconds(0.2f);

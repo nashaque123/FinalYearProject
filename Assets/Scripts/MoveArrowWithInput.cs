@@ -43,4 +43,10 @@ public class MoveArrowWithInput : MonoBehaviour
 
         return false;
     }
+
+    public void Reset()
+    {
+        _newRotationY = 0f;
+        transform.eulerAngles = new Vector3(0f, 0f, 0f);
+    }
 }

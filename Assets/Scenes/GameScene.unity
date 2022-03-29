@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 58107007}
   - component: {fileID: 58107006}
   m_Layer: 5
-  m_Name: Replay Button
+  m_Name: Restart Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5611,6 +5611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GamePlaying: {fileID: 11400000, guid: c8846b955202a8e458c1daa0b6cb9189, type: 2}
+  BallInMotion: {fileID: 11400000, guid: 01b0a63109ff94f418fd6fe574b16615, type: 2}
 --- !u!1 &1627426820
 GameObject:
   m_ObjectHideFlags: 0
@@ -5918,7 +5919,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Replay
+  m_Text: Restart
 --- !u!222 &1822838797
 CanvasRenderer:
   m_ObjectHideFlags: 0

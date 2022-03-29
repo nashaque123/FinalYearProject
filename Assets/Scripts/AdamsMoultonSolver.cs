@@ -71,4 +71,12 @@ public class AdamsMoultonSolver : MonoBehaviour
         float yContactPointOnBall = _ballUI.position.y - Cursor.position.y;
         return new Vector3(Mathf.Sin(angleInRadians), 0.8f + (yContactPointOnBall * 0.01f), Mathf.Cos(angleInRadians) * (1.4f - Mathf.Abs(yContactPointOnBall * 0.01f)));
     }
+
+    public void Reset()
+    {
+        transform.position = new Vector3(0f, 0.16f, 29.59f);
+        AimArrow.SetActive(true);
+        AimArrow.GetComponent<MoveArrowWithInput>().Reset();
+        Cursor.GetComponent<MoveCursorWithInput>().Reset();
+    }
 }
