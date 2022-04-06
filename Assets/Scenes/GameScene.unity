@@ -603,8 +603,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 136129310}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.256, z: 0.012}
-  m_LocalScale: {x: 7.2, y: 2.44, z: 0.1}
+  m_LocalPosition: {x: 0, y: -1.256, z: 0.691}
+  m_LocalScale: {x: 7.2, y: 2.44, z: 1.5}
   m_Children: []
   m_Father: {fileID: 1454666724}
   m_RootOrder: 3
@@ -1256,7 +1256,7 @@ MonoBehaviour:
   - {x: 0, y: 10, z: 55}
   - {x: 0, y: 15, z: 55}
   - {x: 11, y: 10, z: 55}
-  CoefficientOfRestitution: 0.05
+  CoefficientOfRestitution: 0
 --- !u!1 &284868614
 GameObject:
   m_ObjectHideFlags: 0
@@ -2888,7 +2888,7 @@ MonoBehaviour:
   - {x: -35, y: 10, z: 0}
   - {x: -35, y: 16, z: 0}
   - {x: -35, y: 10, z: 8}
-  CoefficientOfRestitution: 0.05
+  CoefficientOfRestitution: 0
 --- !u!1 &610975417
 GameObject:
   m_ObjectHideFlags: 0
@@ -3874,7 +3874,7 @@ MonoBehaviour:
   - {x: 35, y: 10, z: 0}
   - {x: 35, y: 10, z: 8}
   - {x: 35, y: 16, z: 0}
-  CoefficientOfRestitution: 0.05
+  CoefficientOfRestitution: 0
 --- !u!1 &853036369
 GameObject:
   m_ObjectHideFlags: 0
@@ -6070,8 +6070,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1714942649}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.256, z: 0.012}
-  m_LocalScale: {x: 7.2, y: 2.44, z: 0.1}
+  m_LocalPosition: {x: 0, y: -1.256, z: 0.691}
+  m_LocalScale: {x: 7.2, y: 2.44, z: 1.5}
   m_Children: []
   m_Father: {fileID: 1353284827}
   m_RootOrder: 3
@@ -6819,7 +6819,7 @@ MonoBehaviour:
   - {x: 0, y: 10, z: -55}
   - {x: 11, y: 10, z: -55}
   - {x: 0, y: 15, z: -55}
-  CoefficientOfRestitution: 0.05
+  CoefficientOfRestitution: 0
 --- !u!1 &2121726790
 GameObject:
   m_ObjectHideFlags: 0

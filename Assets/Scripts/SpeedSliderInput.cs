@@ -35,9 +35,9 @@ public class SpeedSliderInput : MonoBehaviour
 
     private void DecreaseSpeed()
     {
-        if (PlaySpeedBuffer.Value < 3f)
+        if (PlaySpeedBuffer.Value < 5f)
         {
-            PlaySpeedBuffer.Value++;
+            PlaySpeedBuffer.Value+=2;
         }
 
         Slider.value -= 0.5f;
@@ -47,7 +47,7 @@ public class SpeedSliderInput : MonoBehaviour
     {
         if (PlaySpeedBuffer.Value > 1f)
         {
-            PlaySpeedBuffer.Value--;
+            PlaySpeedBuffer.Value-=2;
         }
 
         Slider.value += 0.5f;
