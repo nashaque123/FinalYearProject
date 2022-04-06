@@ -7,28 +7,34 @@ public class Pause : MonoBehaviour
 {
     public BooleanScriptableObject GamePlaying;
     private GameObject _pauseMenuUI;
-    private Image[] _menuButtons = new Image[3];
+    private GameObject _shotPlacementMenuUI;
+    private Image[] _pauseMenuButtons = new Image[3];
+    private Image[] _shotPlacementMenuButtons = new Image[2];
+    private List<Image> _activeButtons = new List<Image>();
     private int _currentButton = 0;
     private bool _scrollingThroughMenu = false;
     private GameObject _resultText;
     private GameObject _ball;
     public BooleanScriptableObject BallInMotion;
+    private readonly float kMenuSpeedBuffer = 0.15f;
 
     // Start is called before the first frame update
     void Start()
     {
         GamePlaying.Value = true;
         _pauseMenuUI = GameObject.Find("Pause Menu");
-        _menuButtons[0] = GameObject.Find("Resume Button").GetComponent<Image>();
-        _menuButtons[1] = GameObject.Find("Restart Button").GetComponent<Image>();
-        _menuButtons[2] = GameObject.Find("Menu Button").GetComponent<Image>();
+        _shotPlacementMenuUI = GameObject.Find("Shot Placement Menu");
+        _pauseMenuButtons[0] = GameObject.Find("Resume Button").GetComponent<Image>();
+        _pauseMenuButtons[1] = GameObject.Find("Restart Button").GetComponent<Image>();
+        _pauseMenuButtons[2] = GameObject.Find("Shot Placement Button").GetComponent<Image>();
+        _shotPlacementMenuButtons[0] = GameObject.Find("Confirm Button").GetComponent<Image>();
+        _shotPlacementMenuButtons[1] = GameObject.Find("Discard Button").GetComponent<Image>();
         _resultText = GameObject.Find("Result Text");
 
         _pauseMenuUI.SetActive(false);
+        _shotPlacementMenuUI.SetActive(false);
         _resultText.SetActive(false);
-        _menuButtons[0].color = Color.magenta;
-        _menuButtons[1].color = Color.white;
-        _menuButtons[2].color = Color.white;
+        SetMenuButtonsActive(_pauseMenuButtons);
 
         _ball = GameObject.Find("Ball");
     }
@@ -48,13 +54,18 @@ public class Pause : MonoBehaviour
             }
         }
 
-        if (!GamePlaying.Value && !_scrollingThroughMenu)
+        if (!GamePlaying.Value)
         {
-            ProcessPauseMenuInput();
+            if (!_scrollingThroughMenu)
+            {
+                ProcessMenuInput();
+            }
+
+            ProcessMenuSelectInput();
         }
     }
 
-    private void ProcessPauseMenuInput()
+    private void ProcessMenuInput()
     {
         if (Input.GetAxis("Vertical") >= 0.7f || Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -64,21 +75,53 @@ public class Pause : MonoBehaviour
         {
             StartCoroutine(NextButton());
         }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.Return))
+    }
+
+    private void ProcessMenuSelectInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.Return))
         {
-            if (_currentButton == 0)
+            if (_pauseMenuUI.activeInHierarchy)
             {
-                StartCoroutine(ResumeGame());
+                ProcessPauseMenuSelectInput();
             }
-            else if (_currentButton == 1)
+            else
             {
-                RestartGame();
+                ProcessShotPlacementMenuSelectInput();
             }
-            else if (_currentButton == 2)
-            {
-                //back to menu
-                Debug.Log("back to menu");
-            }
+        }
+    }
+
+    private void ProcessPauseMenuSelectInput()
+    {
+        if (_currentButton == 0)
+        {
+            StartCoroutine(ResumeGame());
+        }
+        else if (_currentButton == 1)
+        {
+            RestartGame();
+        }
+        else if (_currentButton == 2)
+        {
+            //go to place ball menu
+            _pauseMenuUI.SetActive(false);
+            _shotPlacementMenuUI.SetActive(true);
+            SetMenuButtonsActive(_shotPlacementMenuButtons);
+        }
+    }
+
+    private void ProcessShotPlacementMenuSelectInput()
+    {
+        if (_currentButton == 0)
+        {
+            //place ball where cursor is
+        }
+        else if (_currentButton == 1)
+        {
+            _shotPlacementMenuUI.SetActive(false);
+            _pauseMenuUI.SetActive(true);
+            SetMenuButtonsActive(_pauseMenuButtons);
         }
     }
 
@@ -108,25 +151,25 @@ public class Pause : MonoBehaviour
     private IEnumerator NextButton()
     {
         _scrollingThroughMenu = true;
-        _menuButtons[_currentButton].color = Color.white;
+        _activeButtons[_currentButton].color = Color.white;
         _currentButton++;
-        _currentButton %= _menuButtons.Length;
-        _menuButtons[_currentButton].color = Color.magenta;
-        yield return new WaitForSeconds(0.2f);
+        _currentButton %= _activeButtons.Count;
+        _activeButtons[_currentButton].color = Color.magenta;
+        yield return new WaitForSeconds(kMenuSpeedBuffer);
         _scrollingThroughMenu = false;
     }
 
     private IEnumerator PreviousButton()
     {
         _scrollingThroughMenu = true;
-        _menuButtons[_currentButton].color = Color.white;
+        _activeButtons[_currentButton].color = Color.white;
         _currentButton--;
 
         if (_currentButton < 0)
-            _currentButton = _menuButtons.Length - 1;
+            _currentButton = _activeButtons.Count - 1;
 
-        _menuButtons[_currentButton].color = Color.magenta;
-        yield return new WaitForSeconds(0.2f);
+        _activeButtons[_currentButton].color = Color.magenta;
+        yield return new WaitForSeconds(kMenuSpeedBuffer);
         _scrollingThroughMenu = false;
     }
 
@@ -135,5 +178,19 @@ public class Pause : MonoBehaviour
         _resultText.GetComponent<Text>().text = didScore ? "You scored!!" : "You missed :(";
         _resultText.SetActive(true);
         PauseGame();
+    }
+
+    private void SetMenuButtonsActive(Image[] menuButtons)
+    {
+        _activeButtons.Clear();
+        _currentButton = 0;
+
+        foreach (Image button in menuButtons)
+        {
+            button.color = Color.white;
+            _activeButtons.Add(button);
+        }
+
+        _activeButtons[0].color = Color.magenta;
     }
 }
