@@ -10,6 +10,9 @@ public class CollisionDetectionAndReaction : MonoBehaviour
     [SerializeField]
     private Plane[] _planes;
 
+    [SerializeField]
+    private Renderer[] _nets;
+
     // Update is called once per frame
     void Update()
     {
@@ -25,6 +28,14 @@ public class CollisionDetectionAndReaction : MonoBehaviour
                 {
                     BallToPlaneReaction(plane, contactPointMagnitude);
                 }
+            }
+        }
+
+        foreach (Renderer net in _nets)
+        {
+            if (IsBallCollidingWithNet(net))
+            {
+                BallToNetResponse(net);
             }
         }
     }
@@ -67,6 +78,34 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         Vector3 unitVectorPostCollision = (2f * dotProductOfNormalAndNegativeUnitVector * plane.NormalToSurface) + unitVectorPreCollision;
         Vector3 velocityPostCollision = plane.CoefficientOfRestitution * velocityMagnitudePreCollision * unitVectorPostCollision;
         _ball.LinearVelocity = velocityPostCollision;
+    }
+
+    private bool IsBallCollidingWithNet(Renderer net)
+    {
+        Bounds bounds = net.bounds;
+
+        //get closest point of net to ball
+        Vector3 closestPoint = new Vector3(Mathf.Max(bounds.min.x, Mathf.Min(_ball.transform.position.x, bounds.max.x)),
+                    Mathf.Max(bounds.min.y, Mathf.Min(_ball.transform.position.y, bounds.max.y)),
+                    Mathf.Max(bounds.min.z, Mathf.Min(_ball.transform.position.z, bounds.max.z)));
+
+
+
+        //check if point is colliding with ball
+        Vector3 vectorBetweenClosestPointAndBall = closestPoint - _ball.transform.position;
+        float distance = MyMathsFunctions.CalculateVectorMagnitude(vectorBetweenClosestPointAndBall);
+        if (net.name.Equals("Net"))
+        {
+            Debug.Log("test " + closestPoint);
+            Debug.Log("test dist " + distance);
+        }
+        return distance <= _ball.Radius;
+    }
+
+    private void BallToNetResponse(Renderer net)
+    {
+        //ball rebounds off net
+        Debug.Log("net " + net.name);
     }
 
     /*private void ImpulseCalculation()
