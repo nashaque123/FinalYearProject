@@ -46,19 +46,14 @@ public class Pause : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("joystick button 7") || Input.GetKeyDown("p"))
+        if (GamePlaying.Value)
         {
-            if (GamePlaying.Value)
+            if (Input.GetKeyDown("joystick button 7") || Input.GetKeyDown("p"))
             {
                 PauseGame();
             }
-            else
-            {
-                StartCoroutine(ResumeGame());
-            }
         }
-
-        if (!GamePlaying.Value)
+        else
         {
             if (!_scrollingThroughMenu)
             {
@@ -213,6 +208,50 @@ public class Pause : MonoBehaviour
         //add quarter of pitch size for z as image is only half the pitch
         float zPos = (BallPlacementCursorUI.transform.localPosition.y * verticalScale) + (_pitchBounds.size.z / 4);
 
-        return new Vector3(xPos, BallStartingPosition.Value.y, zPos);
+        Vector3 newPos = new Vector3(xPos, BallStartingPosition.Value.y, zPos);
+        newPos = KeepBallPositionIsOnPitch(newPos);
+
+        if (IsBallInBox(newPos))
+        {
+            newPos = new Vector3(0f, BallStartingPosition.Value.y, 40f);
+        }
+
+        return newPos;
+    }
+
+    private Vector3 KeepBallPositionIsOnPitch(Vector3 ballPosition)
+    {
+        if (ballPosition.x < -33.5f)
+        {
+            ballPosition.x = -33.5f;
+        }
+        else if (ballPosition.x > 33.5f)
+        {
+            ballPosition.x = 33.5f;
+        }
+
+        if (ballPosition.z < 0f)
+        {
+            ballPosition.z = 0f;
+        }
+        else if (ballPosition.z > 52f)
+        {
+            ballPosition.z = 52f;
+        }
+
+        return ballPosition;
+    }
+
+    private bool IsBallInBox(Vector3 ballPosition)
+    {
+        Vector2 minCorner = new Vector2(-20f, 36f);
+        Vector2 maxCorner = new Vector2(20f, 52f);
+
+        if (ballPosition.x >= minCorner.x && ballPosition.x <= maxCorner.x && ballPosition.z >= minCorner.y && ballPosition.z <= maxCorner.y)
+        {
+            return true;
+        }
+
+        return false;
     }
 }
