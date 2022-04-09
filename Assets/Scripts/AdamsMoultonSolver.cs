@@ -20,11 +20,14 @@ public class AdamsMoultonSolver : MonoBehaviour
     private int counter = 1;
     public BooleanScriptableObject GamePlaying;
     public FloatScriptableObject ShotPower;
+    public Vector3ScriptableObject BallStartingPosition;
 
     // Start is called before the first frame update
     void Start()
     {
         _ball = gameObject.GetComponent<Ball>();
+        _ball.transform.position = BallStartingPosition.Value;
+        _ball.GetComponent<TrailRenderer>().Clear();
         _posX = transform.position.x;
         _posY = transform.position.y;
         _posZ = transform.position.z;
@@ -75,7 +78,7 @@ public class AdamsMoultonSolver : MonoBehaviour
 
     public void Reset()
     {
-        transform.position = new Vector3(0f, 0.16f, 29.59f);
+        transform.position = BallStartingPosition.Value;
         AimArrow.SetActive(true);
         AimArrow.GetComponent<MoveArrowWithInput>().Reset();
         Cursor.GetComponent<MoveCursorWithInput>().Reset();

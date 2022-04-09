@@ -874,6 +874,7 @@ MonoBehaviour:
   PlaySpeedBuffer: {fileID: 11400000, guid: 586fa0b2215b87f4b97d4b24ea8342c9, type: 2}
   GamePlaying: {fileID: 11400000, guid: c8846b955202a8e458c1daa0b6cb9189, type: 2}
   ShotPower: {fileID: 11400000, guid: 2f9e614fb42ce4e40b40a75b48b7eb43, type: 2}
+  BallStartingPosition: {fileID: 11400000, guid: 9a922a0faa3fe54448483f3662a7df3f, type: 2}
 --- !u!96 &187155356
 TrailRenderer:
   serializedVersion: 2
@@ -1884,9 +1885,9 @@ RectTransform:
   m_Father: {fileID: 1455481407}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 100, y: 100}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -100, y: 100}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &424297501
@@ -2074,7 +2075,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dd632d93f3df194eb1c6178eab3796d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MovementStepSize: 2
   GamePlaying: {fileID: 11400000, guid: c8846b955202a8e458c1daa0b6cb9189, type: 2}
+  IsEnabledWhenGameIsPlaying: 0
+  IsParentBall: 0
 --- !u!114 &441444645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2859,7 +2863,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dd632d93f3df194eb1c6178eab3796d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MovementStepSize: 1
   GamePlaying: {fileID: 11400000, guid: c8846b955202a8e458c1daa0b6cb9189, type: 2}
+  IsEnabledWhenGameIsPlaying: 1
+  IsParentBall: 1
 --- !u!1 &579511086
 GameObject:
   m_ObjectHideFlags: 0
@@ -4471,6 +4478,7 @@ MonoBehaviour:
   - {fileID: 359810158}
   - {fileID: 502069196}
   - {fileID: 1543604471}
+  GamePlaying: {fileID: 11400000, guid: c8846b955202a8e458c1daa0b6cb9189, type: 2}
 --- !u!4 &961148770
 Transform:
   m_ObjectHideFlags: 0
@@ -6272,6 +6280,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GamePlaying: {fileID: 11400000, guid: c8846b955202a8e458c1daa0b6cb9189, type: 2}
   BallInMotion: {fileID: 11400000, guid: 01b0a63109ff94f418fd6fe574b16615, type: 2}
+  BallPlacementCursorUI: {fileID: 441444642}
+  BallStartingPosition: {fileID: 11400000, guid: 9a922a0faa3fe54448483f3662a7df3f, type: 2}
 --- !u!114 &1550006148
 MonoBehaviour:
   m_ObjectHideFlags: 0

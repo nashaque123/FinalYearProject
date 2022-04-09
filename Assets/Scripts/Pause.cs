@@ -17,6 +17,9 @@ public class Pause : MonoBehaviour
     private GameObject _ball;
     public BooleanScriptableObject BallInMotion;
     private readonly float kMenuSpeedBuffer = 0.15f;
+    public GameObject BallPlacementCursorUI;
+    public Vector3ScriptableObject BallStartingPosition;
+    private Bounds _pitchBounds;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +40,7 @@ public class Pause : MonoBehaviour
         SetMenuButtonsActive(_pauseMenuButtons);
 
         _ball = GameObject.Find("Ball");
+        _pitchBounds = GameObject.Find("Pitch").GetComponent<MeshRenderer>().bounds;
     }
 
     // Update is called once per frame
@@ -113,13 +117,15 @@ public class Pause : MonoBehaviour
 
     private void ProcessShotPlacementMenuSelectInput()
     {
+        _shotPlacementMenuUI.SetActive(false);
         if (_currentButton == 0)
         {
             //place ball where cursor is
+            BallStartingPosition.Value = CalculateBallPositionFromCursor();
+            RestartGame();
         }
         else if (_currentButton == 1)
         {
-            _shotPlacementMenuUI.SetActive(false);
             _pauseMenuUI.SetActive(true);
             SetMenuButtonsActive(_pauseMenuButtons);
         }
@@ -135,6 +141,7 @@ public class Pause : MonoBehaviour
     private void PauseGame()
     {
         _pauseMenuUI.SetActive(true);
+        SetMenuButtonsActive(_pauseMenuButtons);
         GamePlaying.Value = false;
     }
 
@@ -192,5 +199,20 @@ public class Pause : MonoBehaviour
         }
 
         _activeButtons[0].color = Color.magenta;
+    }
+
+    private Vector3 CalculateBallPositionFromCursor()
+    {
+        Rect parentRect = BallPlacementCursorUI.transform.parent.GetComponent<RectTransform>().rect;
+
+        //pitch size / pitch image size = scale
+        float horizontalScale = _pitchBounds.size.x / parentRect.width;
+        float verticalScale = _pitchBounds.size.z / 2f / parentRect.height;
+
+        float xPos = BallPlacementCursorUI.transform.localPosition.x * horizontalScale;
+        //add quarter of pitch size for z as image is only half the pitch
+        float zPos = (BallPlacementCursorUI.transform.localPosition.y * verticalScale) + (_pitchBounds.size.z / 4);
+
+        return new Vector3(xPos, BallStartingPosition.Value.y, zPos);
     }
 }
