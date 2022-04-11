@@ -1797,6 +1797,7 @@ GameObject:
   - component: {fileID: 412002266}
   - component: {fileID: 412002265}
   - component: {fileID: 412002264}
+  - component: {fileID: 412002267}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1852,6 +1853,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &412002267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412002263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &424297499
 GameObject:
   m_ObjectHideFlags: 0
@@ -1903,7 +1917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.6862745}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8509804}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4478,7 +4492,6 @@ MonoBehaviour:
   - {fileID: 359810158}
   - {fileID: 502069196}
   - {fileID: 1543604471}
-  GamePlaying: {fileID: 11400000, guid: c8846b955202a8e458c1daa0b6cb9189, type: 2}
 --- !u!4 &961148770
 Transform:
   m_ObjectHideFlags: 0
@@ -4586,10 +4599,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71ea00493ebf18249b233414e411b62c, type: 3}
+  m_Script: {fileID: 11500000, guid: 93741dc033e8cf048b9eacaf50469943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FPS: 60
+  BallStartingPosition: {fileID: 11400000, guid: 9a922a0faa3fe54448483f3662a7df3f, type: 2}
 --- !u!1 &972567413
 GameObject:
   m_ObjectHideFlags: 0
@@ -6210,6 +6223,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1550006145}
+  - component: {fileID: 1550006150}
   - component: {fileID: 1550006144}
   - component: {fileID: 1550006146}
   - component: {fileID: 1550006147}
@@ -6312,6 +6326,19 @@ MonoBehaviour:
   BallInMotion: {fileID: 11400000, guid: 01b0a63109ff94f418fd6fe574b16615, type: 2}
   GamePlaying: {fileID: 11400000, guid: c8846b955202a8e458c1daa0b6cb9189, type: 2}
   ShotPower: {fileID: 11400000, guid: 2f9e614fb42ce4e40b40a75b48b7eb43, type: 2}
+--- !u!114 &1550006150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550006143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71ea00493ebf18249b233414e411b62c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FPS: 60
 --- !u!1 &1627426820
 GameObject:
   m_ObjectHideFlags: 0

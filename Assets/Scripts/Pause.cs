@@ -99,7 +99,7 @@ public class Pause : MonoBehaviour
         }
         else if (_currentButton == 1)
         {
-            RestartGame();
+            StartCoroutine(RestartGame());
         }
         else if (_currentButton == 2)
         {
@@ -117,7 +117,7 @@ public class Pause : MonoBehaviour
         {
             //place ball where cursor is
             BallStartingPosition.Value = CalculateBallPositionFromCursor();
-            RestartGame();
+            StartCoroutine(RestartGame());
         }
         else if (_currentButton == 1)
         {
@@ -140,13 +140,14 @@ public class Pause : MonoBehaviour
         GamePlaying.Value = false;
     }
 
-    private void RestartGame()
+    private IEnumerator RestartGame()
     {
         BallInMotion.Value = false;
         _ball.GetComponent<AdamsMoultonSolver>().Reset();
         _ball.GetComponent<TrailRenderer>().Clear();
         gameObject.GetComponent<TakeShot>().Reset();
         _resultText.SetActive(false);
+        yield return new WaitForSeconds(0.2f);
         StartCoroutine(ResumeGame());
     }
 

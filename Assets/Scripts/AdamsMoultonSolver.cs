@@ -26,7 +26,7 @@ public class AdamsMoultonSolver : MonoBehaviour
     void Start()
     {
         _ball = gameObject.GetComponent<Ball>();
-        _ball.transform.position = BallStartingPosition.Value;
+        BallStartingPosition.Value = _ball.transform.position;
         _ball.GetComponent<TrailRenderer>().Clear();
         _posX = transform.position.x;
         _posY = transform.position.y;
