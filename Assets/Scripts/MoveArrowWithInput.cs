@@ -7,6 +7,7 @@ public class MoveArrowWithInput : MonoBehaviour
     private float _newRotationY;
     private readonly float kMovementStepSize = 1f;
     public BooleanScriptableObject GamePlaying;
+    public Camera MainCamera;
 
     // Update is called once per frame
     void Update()
@@ -36,7 +37,7 @@ public class MoveArrowWithInput : MonoBehaviour
 
     private bool IsValidAngle()
     {
-        if (_newRotationY < 90f || _newRotationY > 270f)
+        if (_newRotationY < (90f + MainCamera.transform.eulerAngles.y) % 360f || _newRotationY > (270f + MainCamera.transform.eulerAngles.y) % 360f)
         {
             return true;
         }
@@ -46,7 +47,8 @@ public class MoveArrowWithInput : MonoBehaviour
 
     public void Reset()
     {
-        _newRotationY = 0f;
-        transform.eulerAngles = new Vector3(0f, 0f, 0f);
+        _newRotationY = MainCamera.transform.eulerAngles.y;
+        transform.eulerAngles = new Vector3(0f, MainCamera.transform.eulerAngles.y, 0f);
+        gameObject.SetActive(true);
     }
 }

@@ -1797,7 +1797,6 @@ GameObject:
   - component: {fileID: 412002266}
   - component: {fileID: 412002265}
   - component: {fileID: 412002264}
-  - component: {fileID: 412002267}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1853,19 +1852,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &412002267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 412002263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates: []
 --- !u!1 &424297499
 GameObject:
   m_ObjectHideFlags: 0
@@ -2517,6 +2503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GamePlaying: {fileID: 11400000, guid: c8846b955202a8e458c1daa0b6cb9189, type: 2}
+  MainCamera: {fileID: 963194227}
 --- !u!1 &560414244
 GameObject:
   m_ObjectHideFlags: 0
@@ -6296,6 +6283,7 @@ MonoBehaviour:
   BallInMotion: {fileID: 11400000, guid: 01b0a63109ff94f418fd6fe574b16615, type: 2}
   BallPlacementCursorUI: {fileID: 441444642}
   BallStartingPosition: {fileID: 11400000, guid: 9a922a0faa3fe54448483f3662a7df3f, type: 2}
+  AimArrow: {fileID: 533303803}
 --- !u!114 &1550006148
 MonoBehaviour:
   m_ObjectHideFlags: 0

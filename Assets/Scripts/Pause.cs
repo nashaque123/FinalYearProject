@@ -20,6 +20,7 @@ public class Pause : MonoBehaviour
     public GameObject BallPlacementCursorUI;
     public Vector3ScriptableObject BallStartingPosition;
     private Bounds _pitchBounds;
+    public GameObject AimArrow;
 
     // Start is called before the first frame update
     void Start()
@@ -147,6 +148,8 @@ public class Pause : MonoBehaviour
         _ball.GetComponent<TrailRenderer>().Clear();
         gameObject.GetComponent<TakeShot>().Reset();
         _resultText.SetActive(false);
+        yield return new WaitForSeconds(0.02f);
+        AimArrow.GetComponent<MoveArrowWithInput>().Reset();
         yield return new WaitForSeconds(0.2f);
         StartCoroutine(ResumeGame());
     }

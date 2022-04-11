@@ -79,8 +79,6 @@ public class AdamsMoultonSolver : MonoBehaviour
     public void Reset()
     {
         transform.position = BallStartingPosition.Value;
-        AimArrow.SetActive(true);
-        AimArrow.GetComponent<MoveArrowWithInput>().Reset();
         Cursor.GetComponent<MoveCursorWithInput>().Reset();
     }
 }
