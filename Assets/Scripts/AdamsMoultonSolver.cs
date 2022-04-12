@@ -6,7 +6,6 @@ public class AdamsMoultonSolver : MonoBehaviour
 {
     private Ball _ball;
     private readonly float kGravity = -0.1635f; // 9.81 / 60fps
-    private float _posX, _posY, _posZ;
     private MagnusForce magnusForce;
     private readonly float _dragCoefficient = 0.25f;
     public BooleanScriptableObject ShotTaken;
@@ -28,9 +27,6 @@ public class AdamsMoultonSolver : MonoBehaviour
         _ball = gameObject.GetComponent<Ball>();
         BallStartingPosition.Value = _ball.transform.position;
         _ball.GetComponent<TrailRenderer>().Clear();
-        _posX = transform.position.x;
-        _posY = transform.position.y;
-        _posZ = transform.position.z;
         magnusForce = gameObject.GetComponent<MagnusForce>();
         _ballUI = Cursor.parent;
     }
@@ -64,10 +60,7 @@ public class AdamsMoultonSolver : MonoBehaviour
         Vector3 drag = new Vector3(dragFactor * _ball.LinearVelocity.x * _ball.LinearVelocity.x, dragFactor * _ball.LinearVelocity.y * _ball.LinearVelocity.y, dragFactor * _ball.LinearVelocity.z * _ball.LinearVelocity.z);
         _ball.LinearVelocity = 0.5f * new Vector3(_ball.LinearVelocity.x + _ball.LinearVelocity.x + magnusAcceleration.x + drag.x, _ball.LinearVelocity.y + _ball.LinearVelocity.y + kGravity + magnusAcceleration.y + drag.y, _ball.LinearVelocity.z + _ball.LinearVelocity.z + magnusAcceleration.z + drag.z);
 
-        _posX = transform.position.x + _ball.LinearVelocity.x;
-        _posY = transform.position.y + _ball.LinearVelocity.y;
-        _posZ = transform.position.z + _ball.LinearVelocity.z;
-        transform.position = new Vector3(_posX, _posY, _posZ);
+        transform.position += _ball.LinearVelocity;
     }
 
     private Vector3 CalculateBallLinearVelocity(float angleInRadians)

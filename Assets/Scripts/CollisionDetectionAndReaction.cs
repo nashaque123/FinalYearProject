@@ -70,10 +70,10 @@ public class CollisionDetectionAndReaction : MonoBehaviour
     {
         //move ball to collision point before setting post collision velocity
         float velocityMagnitudePreCollision = MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
-        Vector3 vCol = (_ball.LinearVelocity / velocityMagnitudePreCollision) * contactPointMagnitude;
+        Vector3 unitVectorPreCollision = _ball.LinearVelocity / velocityMagnitudePreCollision;
+        Vector3 vCol = unitVectorPreCollision * contactPointMagnitude;
         _ball.transform.position += vCol;
 
-        Vector3 unitVectorPreCollision = _ball.LinearVelocity / velocityMagnitudePreCollision;
         float dotProductOfNormalAndNegativeUnitVector = MyMathsFunctions.CalculateDotProduct(plane.NormalToSurface, -unitVectorPreCollision);
         Vector3 unitVectorPostCollision = (2f * dotProductOfNormalAndNegativeUnitVector * plane.NormalToSurface) + unitVectorPreCollision;
         Vector3 velocityPostCollision = plane.CoefficientOfRestitution * velocityMagnitudePreCollision * unitVectorPostCollision;
@@ -83,29 +83,28 @@ public class CollisionDetectionAndReaction : MonoBehaviour
     private bool IsBallCollidingWithNet(Renderer net)
     {
         Bounds bounds = net.bounds;
-
-        //get closest point of net to ball
-        Vector3 closestPoint = new Vector3(Mathf.Max(bounds.min.x, Mathf.Min(_ball.transform.position.x, bounds.max.x)),
-                    Mathf.Max(bounds.min.y, Mathf.Min(_ball.transform.position.y, bounds.max.y)),
-                    Mathf.Max(bounds.min.z, Mathf.Min(_ball.transform.position.z, bounds.max.z)));
-
-
-
-        //check if point is colliding with ball
-        Vector3 vectorBetweenClosestPointAndBall = closestPoint - _ball.transform.position;
-        float distance = MyMathsFunctions.CalculateVectorMagnitude(vectorBetweenClosestPointAndBall);
-        if (net.name.Equals("Net"))
+        Vector3 unitVectorBallVelocity = _ball.LinearVelocity / MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
+        Ray ray = new Ray(_ball.transform.position, unitVectorBallVelocity);
+        
+        if (bounds.IntersectRay(ray, out float distance))
         {
-            Debug.Log("test " + closestPoint);
-            Debug.Log("test dist " + distance);
+            if (distance <= MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity))
+            {
+                Vector3 vCol = unitVectorBallVelocity * distance;
+                _ball.transform.position += vCol;
+                return true;
+            }
         }
-        return distance <= _ball.Radius;
+
+        return false;
     }
 
     private void BallToNetResponse(Renderer net)
     {
         //ball rebounds off net
         Debug.Log("net " + net.name);
+        //TODO: add real response - only for testing
+        _ball.LinearVelocity = -_ball.LinearVelocity;
     }
 
     /*private void ImpulseCalculation()
