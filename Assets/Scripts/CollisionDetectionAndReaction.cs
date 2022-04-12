@@ -36,6 +36,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
             if (IsBallCollidingWithNet(net))
             {
                 BallToNetResponse(net);
+                _ball.LinearVelocity = new Vector3(0, 0, 0);
             }
         }
     }
@@ -89,17 +90,39 @@ public class CollisionDetectionAndReaction : MonoBehaviour
                     Mathf.Max(bounds.min.y, Mathf.Min(_ball.transform.position.y, bounds.max.y)),
                     Mathf.Max(bounds.min.z, Mathf.Min(_ball.transform.position.z, bounds.max.z)));
 
-
-
-        //check if point is colliding with ball
+        //check if ball is moving towards net
         Vector3 vectorBetweenClosestPointAndBall = closestPoint - _ball.transform.position;
-        float distance = MyMathsFunctions.CalculateVectorMagnitude(vectorBetweenClosestPointAndBall);
-        if (net.name.Equals("Net"))
+        float cosAngle = MyMathsFunctions.CalculateCosAngleInRadiansBetweenVectors(_ball.LinearVelocity, vectorBetweenClosestPointAndBall);
+        if (cosAngle <= 0)
         {
-            Debug.Log("test " + closestPoint);
-            Debug.Log("test dist " + distance);
+            return false;
         }
-        return distance <= _ball.Radius;
+
+        float vectorMag = MyMathsFunctions.CalculateVectorMagnitude(vectorBetweenClosestPointAndBall);
+        float angleInRadians = MyMathsFunctions.CalculateAngleInRadiansBetweenVectors(_ball.LinearVelocity, vectorBetweenClosestPointAndBall);
+        float distance = Mathf.Sin(angleInRadians) * vectorMag;
+        //TODO: ISSUE - DISTANCE TO CLOSEST POINT MAY NOT BE COLLISION POINT - DETECTION TEMPERAMENTAL - MUST SOLVE
+      //  return distance <= _ball.Radius;
+   // }
+
+    //private float DistanceAlongVectorToContactPoint(GameObject sphere1, GameObject sphere2)
+   // {
+        float e = Mathf.Sqrt((_ball.Radius * _ball.Radius) - (distance * distance));
+
+        //return (Mathf.Cos(angleInRadians) * vectorMag) - e;
+        float contactPointMagnitude = (Mathf.Cos(angleInRadians) * vectorMag) - e;
+        float velocityMag = MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
+        //if (distance <= _ball.Radius)
+        {
+            Debug.Log("cpm " + contactPointMagnitude + ", velMag " + velocityMag + ", e " + e);
+        }
+        if (velocityMag >= contactPointMagnitude)
+        {
+            Vector3 vCol = (_ball.LinearVelocity / velocityMag) * contactPointMagnitude;
+            _ball.transform.position += vCol;
+            return true;
+        }
+        return false;
     }
 
     private void BallToNetResponse(Renderer net)

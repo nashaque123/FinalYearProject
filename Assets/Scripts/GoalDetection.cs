@@ -46,9 +46,8 @@ public class GoalDetection : MonoBehaviour
 
     public IEnumerator DisplayResult(bool didScore)
     {
-        BallInMotion.Value = false;
         yield return new WaitForSeconds(1f);
+        BallInMotion.Value = false;
         gameObject.GetComponent<Pause>().GameOver(didScore);
-        //Debug.Log(didScore ? "winner!" : "loser!");
     }
 }
