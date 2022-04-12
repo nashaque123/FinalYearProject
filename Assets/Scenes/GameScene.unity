@@ -3958,10 +3958,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 827296314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71ea00493ebf18249b233414e411b62c, type: 3}
+  m_Script: {fileID: 11500000, guid: 34f8c1471594cb944b10f875efea4b3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FPS: 60
+  BallStartingPosition: {fileID: 11400000, guid: 9a922a0faa3fe54448483f3662a7df3f, type: 2}
 --- !u!4 &827296318
 Transform:
   m_ObjectHideFlags: 0
@@ -3970,7 +3970,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 827296314}
   m_LocalRotation: {x: -0.18301274, y: 0.6830127, z: -0.18301274, w: -0.6830127}
-  m_LocalPosition: {x: 16.45, y: 7.94, z: 39.78}
+  m_LocalPosition: {x: 35, y: 10, z: 41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 491966147}
@@ -5365,10 +5365,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1366353170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71ea00493ebf18249b233414e411b62c, type: 3}
+  m_Script: {fileID: 11500000, guid: 34f8c1471594cb944b10f875efea4b3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FPS: 60
+  BallStartingPosition: {fileID: 11400000, guid: 9a922a0faa3fe54448483f3662a7df3f, type: 2}
 --- !u!4 &1366353174
 Transform:
   m_ObjectHideFlags: 0
@@ -5377,7 +5377,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1366353170}
   m_LocalRotation: {x: 0.18301274, y: 0.6830127, z: -0.18301274, w: 0.6830127}
-  m_LocalPosition: {x: -16.45, y: 7.94, z: 39.78}
+  m_LocalPosition: {x: -35, y: 10, z: 41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 491966147}
