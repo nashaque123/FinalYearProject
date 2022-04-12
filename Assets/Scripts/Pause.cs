@@ -150,6 +150,7 @@ public class Pause : MonoBehaviour
         _resultText.SetActive(false);
         yield return new WaitForSeconds(0.02f);
         AimArrow.GetComponent<MoveArrowWithInput>().Reset();
+        gameObject.GetComponent<OppositionController>().GenerateWall(IsBallInBox(BallStartingPosition.Value));
         yield return new WaitForSeconds(0.2f);
         StartCoroutine(ResumeGame());
     }
