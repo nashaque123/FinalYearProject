@@ -18,24 +18,27 @@ public class CollisionDetectionAndReaction : MonoBehaviour
     {
         float ballVelocityMagnitude = MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
 
-        foreach (Plane plane in _planes)
+        if (ballVelocityMagnitude > 0f)
         {
-            if (IsBallMovingTowardsPlane(plane))
+            foreach (Renderer net in _nets)
             {
-                float contactPointMagnitude = CalculateDistanceFromBallToCollisionPointOnPlane(plane);
-
-                if (ballVelocityMagnitude >= contactPointMagnitude)
+                if (IsBallCollidingWithNet(net))
                 {
-                    BallToPlaneReaction(plane, contactPointMagnitude);
+                    BallToNetResponse(net);
                 }
             }
-        }
 
-        foreach (Renderer net in _nets)
-        {
-            if (IsBallCollidingWithNet(net))
+            foreach (Plane plane in _planes)
             {
-                BallToNetResponse(net);
+                if (IsBallMovingTowardsPlane(plane))
+                {
+                    float contactPointMagnitude = CalculateDistanceFromBallToCollisionPointOnPlane(plane);
+
+                    if (ballVelocityMagnitude >= contactPointMagnitude)
+                    {
+                        BallToPlaneReaction(plane, contactPointMagnitude);
+                    }
+                }
             }
         }
     }
@@ -85,10 +88,10 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         Bounds bounds = net.bounds;
         Vector3 unitVectorBallVelocity = _ball.LinearVelocity / MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
         Ray ray = new Ray(_ball.transform.position, unitVectorBallVelocity);
-        
+
         if (bounds.IntersectRay(ray, out float distance))
         {
-            if (distance <= MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity))
+            if (distance - _ball.Radius <= MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity))
             {
                 Vector3 vCol = unitVectorBallVelocity * distance;
                 _ball.transform.position += vCol;

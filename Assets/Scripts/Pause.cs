@@ -218,7 +218,7 @@ public class Pause : MonoBehaviour
 
         if (IsBallInBox(newPos))
         {
-            newPos = new Vector3(0f, BallStartingPosition.Value.y, 40f);
+            newPos = new Vector3(0f, BallStartingPosition.Value.y, 40.5f);
         }
 
         return newPos;
