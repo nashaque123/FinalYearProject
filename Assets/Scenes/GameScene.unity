@@ -6341,6 +6341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BallStartingPosition: {fileID: 11400000, guid: 9a922a0faa3fe54448483f3662a7df3f, type: 2}
+  OppositionPlayerPrefab: {fileID: 2866798244104599173, guid: 3e0f034519e42de44af81bf324f2df22, type: 3}
 --- !u!1 &1627426820
 GameObject:
   m_ObjectHideFlags: 0

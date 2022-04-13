@@ -7,15 +7,21 @@ public class OppositionController : MonoBehaviour
     public Vector3ScriptableObject BallStartingPosition;
     private GameObject _targetGoal;
     private readonly float kWallDistanceToBall = 10f;
+    public GameObject OppositionPlayerPrefab;
+    private readonly float kDistanceBetweenPlayersInWall = 0.72f;
+    private List<GameObject> _wallList = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
         _targetGoal = GameObject.Find("Target Goal");
+        GenerateWall(false);
     }
 
     public void GenerateWall(bool isBallInBox)
     {
+        ClearWall();
+
         //if penalty then no wall required
         if (isBallInBox)
         {
@@ -25,12 +31,24 @@ public class OppositionController : MonoBehaviour
         Vector3 centreOfPitchPosition = new Vector3(0f, BallStartingPosition.Value.y, 0f);
         Vector3 targetGoalPosition = _targetGoal.transform.position;
         targetGoalPosition.y = BallStartingPosition.Value.y;
-
         Vector3 vectorFromGoalToCentreOfPitch = targetGoalPosition - centreOfPitchPosition;
         Vector3 vectorFromGoalToBall = targetGoalPosition - BallStartingPosition.Value;
 
         float angleInRadians = MyMathsFunctions.CalculateAngleInRadiansBetweenVectors(vectorFromGoalToCentreOfPitch, vectorFromGoalToBall);
         int wallSize = CalculateNumberOfPlayersInWall(vectorFromGoalToBall, angleInRadians);
+
+        Vector3 perpendicularLine = new Vector3(vectorFromGoalToBall.z, BallStartingPosition.Value.y, -vectorFromGoalToBall.x);
+        Vector3 unitVectorPerpendicular = perpendicularLine / MyMathsFunctions.CalculateVectorMagnitude(perpendicularLine);
+        Vector3 startingPositionOfWall = CalculateStartingPointOfWall(vectorFromGoalToBall, wallSize, unitVectorPerpendicular);
+
+        for (float i = 0f; i < wallSize; i++)
+        {
+            Vector3 position = startingPositionOfWall + (kDistanceBetweenPlayersInWall * i * unitVectorPerpendicular);
+            //adjust y value for 0.5 * height of prefab
+            position.y = 0.8f;
+            GameObject obj = Instantiate(OppositionPlayerPrefab, position, Quaternion.identity);
+            _wallList.Add(obj);
+        }
     }
 
     private int CalculateNumberOfPlayersInWall(Vector3 vectorFromGoalToBall, float angleInRadians)
@@ -54,5 +72,24 @@ public class OppositionController : MonoBehaviour
             default:
                 return 1;
         }
+    }
+
+    private void ClearWall()
+    {
+        for (int i = _wallList.Count - 1; i >= 0; i--)
+        {
+            GameObject obj = _wallList[i];
+            _wallList.RemoveAt(i);
+            Destroy(obj);
+        }
+    }
+
+    private Vector3 CalculateStartingPointOfWall(Vector3 vectorFromGoalToBall, int wallSize, Vector3 unitVectorPerpendicular)
+    {
+        Vector3 unitVectorFromGoalToBall = vectorFromGoalToBall / MyMathsFunctions.CalculateVectorMagnitude(vectorFromGoalToBall);
+        Vector3 centrePointOfWall = BallStartingPosition.Value + (unitVectorFromGoalToBall * kWallDistanceToBall);
+        Vector3 startingPoint = centrePointOfWall - (kDistanceBetweenPlayersInWall * ((wallSize / 2f) - 0.5f) * unitVectorPerpendicular);
+
+        return startingPoint;
     }
 }
