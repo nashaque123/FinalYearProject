@@ -87,14 +87,13 @@ public class CollisionDetectionAndReaction : MonoBehaviour
     {
         Bounds bounds = net.bounds;
         Vector3 unitVectorBallVelocity = _ball.LinearVelocity / MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
-        Ray ray = new Ray(_ball.transform.position, unitVectorBallVelocity);
+        MyRay ray = new MyRay(_ball.transform.position, unitVectorBallVelocity, _ball.Radius);
 
-        if (bounds.IntersectRay(ray, out float distance))
+        if (ray.IntersectsWithNet(bounds, out float distance, out Vector3 collisionPoint))
         {
             if (distance - _ball.Radius <= MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity))
             {
-                Vector3 vCol = unitVectorBallVelocity * distance;
-                _ball.transform.position += vCol;
+                _ball.transform.position = collisionPoint;
                 return true;
             }
         }
