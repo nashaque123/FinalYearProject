@@ -1227,7 +1227,7 @@ MonoBehaviour:
   - {x: 0, y: 10, z: 55}
   - {x: 0, y: 15, z: 55}
   - {x: 11, y: 10, z: 55}
-  CoefficientOfRestitution: 0.1
+  CoefficientOfRestitution: 0.4
 --- !u!1 &259698676
 GameObject:
   m_ObjectHideFlags: 0
@@ -3097,7 +3097,7 @@ MonoBehaviour:
   - {x: -35, y: 10, z: 0}
   - {x: -35, y: 16, z: 0}
   - {x: -35, y: 10, z: 8}
-  CoefficientOfRestitution: 0.1
+  CoefficientOfRestitution: 0.4
 --- !u!1 &610975417
 GameObject:
   m_ObjectHideFlags: 0
@@ -4024,7 +4024,7 @@ MonoBehaviour:
   - {x: 35, y: 10, z: 0}
   - {x: 35, y: 10, z: 8}
   - {x: 35, y: 16, z: 0}
-  CoefficientOfRestitution: 0.1
+  CoefficientOfRestitution: 0.4
 --- !u!1 &849858990
 GameObject:
   m_ObjectHideFlags: 0
@@ -7069,7 +7069,7 @@ MonoBehaviour:
   - {x: 0, y: 10, z: -55}
   - {x: 11, y: 10, z: -55}
   - {x: 0, y: 15, z: -55}
-  CoefficientOfRestitution: 0.1
+  CoefficientOfRestitution: 0.4
 --- !u!1 &2121726790
 GameObject:
   m_ObjectHideFlags: 0

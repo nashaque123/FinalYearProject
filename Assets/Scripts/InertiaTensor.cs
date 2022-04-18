@@ -4,24 +4,25 @@ using UnityEngine;
 
 public class InertiaTensor
 {
-    private Matrix3x3 inertiaTensor;
-    float sphereValue;
+    private readonly Matrix3x3 _inertiaTensor;
+    private readonly float _sphereInertiaValue;
 
     public InertiaTensor(float mass, float radius)
     {
-        sphereValue = 2f / 5f * mass * radius * radius;
+        //hollow sphere inertia for ball
+        _sphereInertiaValue = 2f / 3f * mass * radius * radius;
 
-        inertiaTensor = new Matrix3x3(
-            new Vector3(sphereValue, 0f, 0f),
-            new Vector3(0f, sphereValue, 0f),
-            new Vector3(0f, 0f, sphereValue));
+        _inertiaTensor = new Matrix3x3(
+            new Vector3(_sphereInertiaValue, 0f, 0f),
+            new Vector3(0f, _sphereInertiaValue, 0f),
+            new Vector3(0f, 0f, _sphereInertiaValue));
     }
 
     public Matrix3x3 LocalCoordinateSystem
     {
         get
         {
-            return inertiaTensor;
+            return _inertiaTensor;
         }
     }
 
@@ -30,9 +31,17 @@ public class InertiaTensor
         get
         {
             return new Matrix3x3(
-            new Vector3(1f / sphereValue, 0f, 0f),
-            new Vector3(0f, 1f / sphereValue, 0f),
-            new Vector3(0f, 0f, 1f / sphereValue));
+            new Vector3(1f / _sphereInertiaValue, 0f, 0f),
+            new Vector3(0f, 1f / _sphereInertiaValue, 0f),
+            new Vector3(0f, 0f, 1f / _sphereInertiaValue));
+        }
+    }
+
+    public float Inertia
+    {
+        get
+        {
+            return _sphereInertiaValue;
         }
     }
 }
