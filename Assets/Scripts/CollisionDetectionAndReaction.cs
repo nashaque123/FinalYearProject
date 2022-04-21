@@ -11,7 +11,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
     private Plane[] _planes;
 
     [SerializeField]
-    private Renderer[] _nets;
+    private Net[] _nets;
 
     [SerializeField]
     private Renderer[] _goalPosts;
@@ -32,26 +32,26 @@ public class CollisionDetectionAndReaction : MonoBehaviour
             {
                 if (IsBallCollidingWithNet(opp.GetComponent<MeshRenderer>()))
                 {
-                    BallToNetResponse(opp.GetComponent<MeshRenderer>());
+                    BallToCapsuleResponse();
                 }
             }
 
             if (IsBallCollidingWithNet(_goalkeeper))
             {
-                BallToNetResponse(_goalkeeper);
+                BallToCapsuleResponse();
             }
 
             foreach (Renderer post in _goalPosts)
             {
                 if (IsBallCollidingWithNet(post))
                 {
-                    BallToNetResponse(post);
+                    BallToCapsuleResponse();
                 }
             }
             
-            foreach (Renderer net in _nets)
+            foreach (Net net in _nets)
             {
-                if (IsBallCollidingWithNet(net))
+                if (IsBallCollidingWithNet(net.GetComponent<Renderer>()))
                 {
                     BallToNetResponse(net);
                 }
@@ -105,14 +105,10 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         Vector3 unitVectorPreCollision = _ball.LinearVelocity / velocityMagnitudePreCollision;
         Vector3 vCol = unitVectorPreCollision * contactPointMagnitude;
         _ball.transform.position += vCol;
-
-        Vector3 pos = _ball.transform.position + (_ball.Radius * unitVectorPreCollision);
-        Debug.Log("collision point " + pos);
-        ImpulseCalculation(pos, plane);
-        /*float dotProductOfNormalAndNegativeUnitVector = MyMathsFunctions.CalculateDotProduct(plane.NormalToSurface, -unitVectorPreCollision);
+        float dotProductOfNormalAndNegativeUnitVector = MyMathsFunctions.CalculateDotProduct(plane.NormalToSurface, -unitVectorPreCollision);
         Vector3 unitVectorPostCollision = (2f * dotProductOfNormalAndNegativeUnitVector * plane.NormalToSurface) + unitVectorPreCollision;
         Vector3 velocityPostCollision = plane.CoefficientOfRestitution * velocityMagnitudePreCollision * unitVectorPostCollision;
-        _ball.LinearVelocity = velocityPostCollision;*/
+        _ball.LinearVelocity = velocityPostCollision;
     }
 
     private bool IsBallCollidingWithNet(Renderer net)
@@ -133,20 +129,38 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         return false;
     }
 
-    private void BallToNetResponse(Renderer net)
+    //handle as plane response 
+    private void BallToNetResponse(Net net)
     {
-        //ball rebounds off net
-        Debug.Log("net " + net.name);
-        //TODO: add real response - only for testing
-        _ball.LinearVelocity = -_ball.LinearVelocity;
+        float velocityMagnitudePreCollision = MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
+        Vector3 unitVectorPreCollision = _ball.LinearVelocity / velocityMagnitudePreCollision;
+        //Vector3 collisionPoint = _ball.transform.position + (unitVectorPreCollision * _ball.Radius);
+        Bounds bounds = net.Bounds;
+        Vector3 collisionPoint = new Vector3(Mathf.Max(bounds.min.x, Mathf.Min(_ball.transform.position.x, bounds.max.x)),
+            Mathf.Max(bounds.min.y, Mathf.Min(_ball.transform.position.y, bounds.max.y)),
+            Mathf.Max(bounds.min.z, Mathf.Min(_ball.transform.position.z, bounds.max.z)));
+        Debug.DrawRay(collisionPoint, net.GetNormalOfCollisionFace(collisionPoint), Color.white, 35f);
+        float dotProductOfNormalAndNegativeUnitVector = MyMathsFunctions.CalculateDotProduct(net.GetNormalOfCollisionFace(collisionPoint), -unitVectorPreCollision);
+        Vector3 unitVectorPostCollision = (2f * dotProductOfNormalAndNegativeUnitVector * net.GetNormalOfCollisionFace(collisionPoint)) + unitVectorPreCollision;
+        Vector3 velocityPostCollision = 0.1f * velocityMagnitudePreCollision * unitVectorPostCollision;
+        _ball.LinearVelocity = velocityPostCollision;
     }
 
-    private void ImpulseCalculation(Vector3 collisionPoint, Plane plane)
+    private void BallToCapsuleResponse()
+    {
+        float velocityMagnitudePreCollision = MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
+        Vector3 unitVectorPreCollision = _ball.LinearVelocity / velocityMagnitudePreCollision;
+        Vector3 pos = _ball.transform.position + (_ball.Radius * unitVectorPreCollision);
+        Debug.Log("collision point " + pos);
+        ImpulseCalculation(pos);
+    }
+
+    private void ImpulseCalculation(Vector3 collisionPoint)
     {
         Vector3 relativePosition = collisionPoint - _ball.transform.position;
         Vector3 collisionNormal = relativePosition / MyMathsFunctions.CalculateVectorMagnitude(relativePosition);
         Vector3 totalInertia = Vector3.Cross(_ball.InertiaTensor.Inverse * Vector3.Cross(relativePosition, collisionNormal), relativePosition);
-        float impulse = -(1f + plane.CoefficientOfRestitution) * MyMathsFunctions.CalculateDotProduct(-(_ball.LinearVelocity + Vector3.Cross(_ball.AngularVelocity, relativePosition)), collisionNormal) / ((1f / _ball.Mass) + MyMathsFunctions.CalculateDotProduct(totalInertia, collisionNormal));
+        float impulse = -(1f + 0.2f) * MyMathsFunctions.CalculateDotProduct(-(_ball.LinearVelocity + Vector3.Cross(_ball.AngularVelocity, relativePosition)), collisionNormal) / ((1f / _ball.Mass) + MyMathsFunctions.CalculateDotProduct(totalInertia, collisionNormal));
         Debug.Log("impulse " + impulse);
         Debug.Log("old vel " + _ball.LinearVelocity + ", new vel " + (_ball.LinearVelocity + (-(impulse * collisionNormal) / _ball.Mass)));
         Debug.Log("old ang vel " + _ball.AngularVelocity + ", new ang vel " + (_ball.AngularVelocity + (Vector3.Cross(relativePosition, -(impulse * collisionNormal)) / _ball.InertiaTensor.Inertia)));
