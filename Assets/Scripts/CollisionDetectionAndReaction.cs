@@ -13,6 +13,14 @@ public class CollisionDetectionAndReaction : MonoBehaviour
     [SerializeField]
     private Renderer[] _nets;
 
+    [SerializeField]
+    private Renderer[] _goalPosts;
+
+    [SerializeField]
+    private Renderer _goalkeeper;
+
+    public ListGameObjectsScriptableObject WallList;
+
     // Update is called once per frame
     void Update()
     {
@@ -20,6 +28,27 @@ public class CollisionDetectionAndReaction : MonoBehaviour
 
         if (ballVelocityMagnitude > 0f)
         {
+            foreach (GameObject opp in WallList.List)
+            {
+                if (IsBallCollidingWithNet(opp.GetComponent<MeshRenderer>()))
+                {
+                    BallToNetResponse(opp.GetComponent<MeshRenderer>());
+                }
+            }
+
+            if (IsBallCollidingWithNet(_goalkeeper))
+            {
+                BallToNetResponse(_goalkeeper);
+            }
+
+            foreach (Renderer post in _goalPosts)
+            {
+                if (IsBallCollidingWithNet(post))
+                {
+                    BallToNetResponse(post);
+                }
+            }
+            
             foreach (Renderer net in _nets)
             {
                 if (IsBallCollidingWithNet(net))
