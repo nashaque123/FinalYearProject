@@ -13,6 +13,14 @@ public class CollisionDetectionAndReaction : MonoBehaviour
     [SerializeField]
     private Renderer[] _nets;
 
+    [SerializeField]
+    private Renderer[] _goalPosts;
+
+    [SerializeField]
+    private Renderer _goalkeeper;
+
+    public ListGameObjectsScriptableObject WallList;
+
     // Update is called once per frame
     void Update()
     {
@@ -20,6 +28,27 @@ public class CollisionDetectionAndReaction : MonoBehaviour
 
         if (ballVelocityMagnitude > 0f)
         {
+            foreach (GameObject opp in WallList.List)
+            {
+                if (IsBallCollidingWithNet(opp.GetComponent<MeshRenderer>()))
+                {
+                    BallToNetResponse(opp.GetComponent<MeshRenderer>());
+                }
+            }
+
+            if (IsBallCollidingWithNet(_goalkeeper))
+            {
+                BallToNetResponse(_goalkeeper);
+            }
+
+            foreach (Renderer post in _goalPosts)
+            {
+                if (IsBallCollidingWithNet(post))
+                {
+                    BallToNetResponse(post);
+                }
+            }
+            
             foreach (Renderer net in _nets)
             {
                 if (IsBallCollidingWithNet(net))
@@ -108,11 +137,4 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         //TODO: add real response - only for testing
         _ball.LinearVelocity = -_ball.LinearVelocity;
     }
-
-    /*private void ImpulseCalculation()
-    {
-        Vector3 collisionNormal = _ball.LinearVelocity / MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
-        float totalInertia = Vector3.Cross(_ball.InertiaTensor.Inverse * Vector3.Cross(_ball.Radius, collisionNormal)
-        float impulse = (-(1f + 0.9f) * Vector3.Dot(_ball.LinearVelocity, collisionNormal) / ((1f / _ball.Mass) + (1f / _ball.Mass) + ));
-    }*/
 }

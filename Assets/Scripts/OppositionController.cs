@@ -9,7 +9,7 @@ public class OppositionController : MonoBehaviour
     private readonly float kWallDistanceToBall = 10f;
     public GameObject OppositionPlayerPrefab;
     private readonly float kDistanceBetweenPlayersInWall = 0.72f;
-    private List<GameObject> _wallList = new List<GameObject>();
+    public ListGameObjectsScriptableObject WallList;
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +47,7 @@ public class OppositionController : MonoBehaviour
             //adjust y value for 0.5 * height of prefab
             position.y = 0.8f;
             GameObject obj = Instantiate(OppositionPlayerPrefab, position, Quaternion.identity);
-            _wallList.Add(obj);
+            WallList.List.Add(obj);
         }
     }
 
@@ -76,10 +76,10 @@ public class OppositionController : MonoBehaviour
 
     private void ClearWall()
     {
-        for (int i = _wallList.Count - 1; i >= 0; i--)
+        for (int i = WallList.List.Count - 1; i >= 0; i--)
         {
-            GameObject obj = _wallList[i];
-            _wallList.RemoveAt(i);
+            GameObject obj = WallList.List[i];
+            WallList.List.RemoveAt(i);
             Destroy(obj);
         }
     }
