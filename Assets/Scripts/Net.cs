@@ -24,7 +24,8 @@ public class Net : MonoBehaviour
                     Vector3 basePoint = new Vector3(_bounds.min.x, _bounds.min.y, _bounds.max.z);
                     Vector3 a = new Vector3(_bounds.min.x, _bounds.max.y, _bounds.max.z);
                     Vector3 b = new Vector3(_bounds.min.x, _bounds.min.y, _bounds.min.z);
-                    return GetCrossProductFromVectors(basePoint, a, b);
+                    Vector3 cross = GetCrossProductFromVectors(basePoint, a, b);
+                    return cross / MyMathsFunctions.CalculateVectorMagnitude(cross);
                 }
             case "max0":
                 //maxx,miny,maxz - maxx,miny,minz, maxx,maxy,minz - maxx,miny,minz
@@ -32,7 +33,8 @@ public class Net : MonoBehaviour
                     Vector3 basePoint = new Vector3(_bounds.max.x, _bounds.min.y, _bounds.min.z);
                     Vector3 a = new Vector3(_bounds.max.x, _bounds.min.y, _bounds.max.z);
                     Vector3 b = new Vector3(_bounds.max.x, _bounds.max.y, _bounds.min.z);
-                    return GetCrossProductFromVectors(basePoint, a, b);
+                    Vector3 cross = GetCrossProductFromVectors(basePoint, a, b);
+                    return cross / MyMathsFunctions.CalculateVectorMagnitude(cross);
                 }
             case "min1":
                 //maxx,miny,minz - minx,miny,minz, minx,miny,maxz - minx,miny,minz
@@ -40,7 +42,8 @@ public class Net : MonoBehaviour
                     Vector3 basePoint = new Vector3(_bounds.min.x, _bounds.min.y, _bounds.min.z);
                     Vector3 a = new Vector3(_bounds.max.x, _bounds.min.y, _bounds.min.z);
                     Vector3 b = new Vector3(_bounds.min.x, _bounds.min.y, _bounds.max.z);
-                    return GetCrossProductFromVectors(basePoint, a, b);
+                    Vector3 cross = GetCrossProductFromVectors(basePoint, a, b);
+                    return cross / MyMathsFunctions.CalculateVectorMagnitude(cross);
                 }
             case "max1":
                 //maxx,maxy,maxz - maxx,maxy,minz, minx,maxy,minz - maxx,maxy,minz
@@ -48,7 +51,8 @@ public class Net : MonoBehaviour
                     Vector3 basePoint = new Vector3(_bounds.max.x, _bounds.max.y, _bounds.min.z);
                     Vector3 a = new Vector3(_bounds.max.x, _bounds.max.y, _bounds.max.z);
                     Vector3 b = new Vector3(_bounds.min.x, _bounds.max.y, _bounds.min.z);
-                    return GetCrossProductFromVectors(basePoint, a, b);
+                    Vector3 cross = GetCrossProductFromVectors(basePoint, a, b);
+                    return cross / MyMathsFunctions.CalculateVectorMagnitude(cross);
                 }
             case "min2":
                 //minx,miny,minz - minx,maxy,minz, maxx,maxy,minz - minx,maxy,minz
@@ -56,7 +60,8 @@ public class Net : MonoBehaviour
                     Vector3 basePoint = new Vector3(_bounds.min.x, _bounds.max.y, _bounds.min.z);
                     Vector3 a = new Vector3(_bounds.min.x, _bounds.min.y, _bounds.min.z);
                     Vector3 b = new Vector3(_bounds.max.x, _bounds.max.y, _bounds.min.z);
-                    return GetCrossProductFromVectors(basePoint, a, b);
+                    Vector3 cross = GetCrossProductFromVectors(basePoint, a, b);
+                    return cross / MyMathsFunctions.CalculateVectorMagnitude(cross);
                 }
             case "max2":
                 //maxx,miny,maxz - maxx,maxy,maxz, minx,maxy,maxz - maxx,maxy,maxz
@@ -64,7 +69,8 @@ public class Net : MonoBehaviour
                     Vector3 basePoint = new Vector3(_bounds.max.x, _bounds.max.y, _bounds.max.z);
                     Vector3 a = new Vector3(_bounds.max.x, _bounds.min.y, _bounds.max.z);
                     Vector3 b = new Vector3(_bounds.min.x, _bounds.max.y, _bounds.max.z);
-                    return GetCrossProductFromVectors(basePoint, a, b);
+                    Vector3 cross = GetCrossProductFromVectors(basePoint, a, b);
+                    return cross / MyMathsFunctions.CalculateVectorMagnitude(cross);
                 }
             default:
                 return new Vector3(-1f, -1f, -1f);
