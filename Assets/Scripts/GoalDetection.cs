@@ -38,7 +38,7 @@ public class GoalDetection : MonoBehaviour
     {
         //check if ball is within bounds and z + radius > goal collider z
         if (Ball.transform.position.x > bounds.min.x && Ball.transform.position.y > bounds.min.y && Ball.transform.position.x < bounds.max.x
-            && Ball.transform.position.y < bounds.max.y && Ball.transform.position.z + Ball.Radius > bounds.min.z + 0.01f && Ball.transform.position.z < bounds.max.z)
+            && Ball.transform.position.y < bounds.max.y && Ball.transform.position.z - Ball.Radius > bounds.min.z + 0.01f && Ball.transform.position.z + Ball.Radius < bounds.max.z)
         {
             return true;
         }
@@ -52,6 +52,5 @@ public class GoalDetection : MonoBehaviour
         BallInMotion.Value = false;
         _goalScored = false;
         gameObject.GetComponent<Pause>().GameOver(didScore);
-        //Debug.Log(didScore ? "winner!" : "loser!");
     }
 }

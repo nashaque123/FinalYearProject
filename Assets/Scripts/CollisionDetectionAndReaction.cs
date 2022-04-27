@@ -56,7 +56,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
                     BallToCapsuleResponse();
                 }
             }
-            
+
             foreach (Plane plane in _planes)
             {
                 if (IsBallMovingTowardsPlane(plane))
@@ -138,7 +138,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         Debug.DrawRay(collisionPoint, net.GetNormalOfCollisionFace(collisionPoint), Color.white, 35f);
         float dotProductOfNormalAndNegativeUnitVector = MyMathsFunctions.CalculateDotProduct(net.GetNormalOfCollisionFace(collisionPoint), -unitVectorPreCollision);
         Vector3 unitVectorPostCollision = (2f * dotProductOfNormalAndNegativeUnitVector * net.GetNormalOfCollisionFace(collisionPoint)) + unitVectorPreCollision;
-        Vector3 velocityPostCollision = 0.1f * velocityMagnitudePreCollision * unitVectorPostCollision;
+        Vector3 velocityPostCollision = net.CoefficientOfRestitution * velocityMagnitudePreCollision * unitVectorPostCollision;
         _ball.LinearVelocity = velocityPostCollision;
     }
 
@@ -147,7 +147,6 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         float velocityMagnitudePreCollision = MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
         Vector3 unitVectorPreCollision = _ball.LinearVelocity / velocityMagnitudePreCollision;
         Vector3 pos = _ball.transform.position + (_ball.Radius * unitVectorPreCollision);
-        Debug.Log("collision point " + pos);
         ImpulseCalculation(pos);
     }
 
@@ -157,9 +156,6 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         Vector3 collisionNormal = relativePosition / MyMathsFunctions.CalculateVectorMagnitude(relativePosition);
         Vector3 totalInertia = Vector3.Cross(_ball.InertiaTensor.Inverse * Vector3.Cross(relativePosition, collisionNormal), relativePosition);
         float impulse = -(1f + 0.2f) * MyMathsFunctions.CalculateDotProduct(-(_ball.LinearVelocity + Vector3.Cross(_ball.AngularVelocity, relativePosition)), collisionNormal) / ((1f / _ball.Mass) + MyMathsFunctions.CalculateDotProduct(totalInertia, collisionNormal));
-        Debug.Log("impulse " + impulse);
-        Debug.Log("old vel " + _ball.LinearVelocity + ", new vel " + (_ball.LinearVelocity + (-(impulse * collisionNormal) / _ball.Mass)));
-        Debug.Log("old ang vel " + _ball.AngularVelocity + ", new ang vel " + (_ball.AngularVelocity + (Vector3.Cross(relativePosition, -(impulse * collisionNormal)) / _ball.InertiaTensor.Inertia)));
         _ball.LinearVelocity += -(impulse * collisionNormal) / _ball.Mass;
         _ball.AngularVelocity += _ball.InertiaTensor.Inverse * Vector3.Cross(relativePosition, -(impulse * collisionNormal));
     }

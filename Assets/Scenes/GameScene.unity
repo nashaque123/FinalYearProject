@@ -1678,6 +1678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba2f10667cf4714b898474a3516bb39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CoefficientOfRestitution: 0.15
 --- !u!23 &359810158
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2364,6 +2365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba2f10667cf4714b898474a3516bb39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CoefficientOfRestitution: 0.15
 --- !u!23 &502069196
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3919,6 +3921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba2f10667cf4714b898474a3516bb39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CoefficientOfRestitution: 0.15
 --- !u!23 &828635646
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4689,6 +4692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba2f10667cf4714b898474a3516bb39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CoefficientOfRestitution: 0.15
 --- !u!23 &1029047112
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4955,7 +4959,7 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 8}
   - {x: 8, y: 0, z: 0}
-  CoefficientOfRestitution: 0.8
+  CoefficientOfRestitution: 0.65
 --- !u!1 &1317765190
 GameObject:
   m_ObjectHideFlags: 0
@@ -5001,6 +5005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba2f10667cf4714b898474a3516bb39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CoefficientOfRestitution: 0.15
 --- !u!23 &1317765193
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5096,6 +5101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba2f10667cf4714b898474a3516bb39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CoefficientOfRestitution: 0.9
 --- !u!23 &1346467564
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5997,7 +6003,7 @@ Transform:
   m_GameObject: {fileID: 1543604468}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.01, y: -0.024, z: 0.73}
-  m_LocalScale: {x: 7.32, y: 0.1, z: 1.43}
+  m_LocalScale: {x: 7.32, y: 0.01, z: 1.43}
   m_Children: []
   m_Father: {fileID: 1353284827}
   m_RootOrder: 7
@@ -6014,6 +6020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba2f10667cf4714b898474a3516bb39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CoefficientOfRestitution: 0.9
 --- !u!23 &1543604471
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6718,6 +6725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba2f10667cf4714b898474a3516bb39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CoefficientOfRestitution: 0.15
 --- !u!23 &1855450972
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6780,6 +6788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba2f10667cf4714b898474a3516bb39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CoefficientOfRestitution: 0
 --- !u!1 &1893760766
 GameObject:
   m_ObjectHideFlags: 0

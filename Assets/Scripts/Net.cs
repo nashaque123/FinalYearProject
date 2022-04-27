@@ -7,6 +7,9 @@ public class Net : MonoBehaviour
     private Bounds _bounds;
     private readonly float kRoomForError = 0.0001f;
 
+    [Range(0.0f, 1.0f)]
+    public float CoefficientOfRestitution;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +45,7 @@ public class Net : MonoBehaviour
                     Vector3 basePoint = new Vector3(_bounds.min.x, _bounds.min.y, _bounds.min.z);
                     Vector3 a = new Vector3(_bounds.min.x, _bounds.min.y, _bounds.max.z);
                     Vector3 b = new Vector3(_bounds.max.x, _bounds.min.y, _bounds.min.z);
-                    Vector3 cross = GetCrossProductFromVectors(basePoint, a, b);
+                    Vector3 cross = GetCrossProductFromVectors(basePoint, b, a);
                     return cross / MyMathsFunctions.CalculateVectorMagnitude(cross);
                 }
             case "max1":
