@@ -41,14 +41,6 @@ public class CollisionDetectionAndReaction : MonoBehaviour
                 BallToCapsuleResponse();
             }
 
-            foreach (Renderer post in _goalPosts)
-            {
-                if (IsBallCollidingWithNet(post))
-                {
-                    BallToCapsuleResponse();
-                }
-            }
-            
             foreach (Net net in _nets)
             {
                 if (IsBallCollidingWithNet(net.GetComponent<Renderer>()))
@@ -57,6 +49,14 @@ public class CollisionDetectionAndReaction : MonoBehaviour
                 }
             }
 
+            foreach (Renderer post in _goalPosts)
+            {
+                if (IsBallCollidingWithNet(post))
+                {
+                    BallToCapsuleResponse();
+                }
+            }
+            
             foreach (Plane plane in _planes)
             {
                 if (IsBallMovingTowardsPlane(plane))
@@ -121,7 +121,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         {
             if (distance - _ball.Radius <= MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity))
             {
-                _ball.transform.position = collisionPoint;
+                _ball.transform.position = collisionPoint - (unitVectorBallVelocity * _ball.Radius);
                 return true;
             }
         }
@@ -134,11 +134,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
     {
         float velocityMagnitudePreCollision = MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
         Vector3 unitVectorPreCollision = _ball.LinearVelocity / velocityMagnitudePreCollision;
-        //Vector3 collisionPoint = _ball.transform.position + (unitVectorPreCollision * _ball.Radius);
-        Bounds bounds = net.Bounds;
-        Vector3 collisionPoint = new Vector3(Mathf.Max(bounds.min.x, Mathf.Min(_ball.transform.position.x, bounds.max.x)),
-            Mathf.Max(bounds.min.y, Mathf.Min(_ball.transform.position.y, bounds.max.y)),
-            Mathf.Max(bounds.min.z, Mathf.Min(_ball.transform.position.z, bounds.max.z)));
+        Vector3 collisionPoint = _ball.transform.position + (unitVectorPreCollision * _ball.Radius);
         Debug.DrawRay(collisionPoint, net.GetNormalOfCollisionFace(collisionPoint), Color.white, 35f);
         float dotProductOfNormalAndNegativeUnitVector = MyMathsFunctions.CalculateDotProduct(net.GetNormalOfCollisionFace(collisionPoint), -unitVectorPreCollision);
         Vector3 unitVectorPostCollision = (2f * dotProductOfNormalAndNegativeUnitVector * net.GetNormalOfCollisionFace(collisionPoint)) + unitVectorPreCollision;
