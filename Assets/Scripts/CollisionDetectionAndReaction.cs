@@ -17,7 +17,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
     private Renderer[] _goalPosts;
 
     [SerializeField]
-    private Renderer _goalkeeper;
+    private Transform _goalkeeper;
 
     public ListGameObjectsScriptableObject WallList;
 
@@ -30,13 +30,14 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         {
             foreach (GameObject opp in WallList.List)
             {
-                if (IsBallCollidingWithNet(opp.GetComponent<MeshRenderer>()))
+                if (IsBallCollidingWithOppositionPlayer(opp.transform))
                 {
+                    //_ball.LinearVelocity = new Vector3(0f, 0f, 0f);
                     BallToCapsuleResponse();
                 }
             }
 
-            if (IsBallCollidingWithNet(_goalkeeper))
+            if (IsBallCollidingWithOppositionPlayer(_goalkeeper))
             {
                 BallToCapsuleResponse();
             }
@@ -49,13 +50,13 @@ public class CollisionDetectionAndReaction : MonoBehaviour
                 }
             }
 
-            foreach (Renderer post in _goalPosts)
+            /*foreach (Renderer post in _goalPosts)
             {
                 if (IsBallCollidingWithNet(post))
                 {
                     BallToCapsuleResponse();
                 }
-            }
+            }*/
 
             foreach (Plane plane in _planes)
             {
@@ -140,6 +141,23 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         Vector3 unitVectorPostCollision = (2f * dotProductOfNormalAndNegativeUnitVector * net.GetNormalOfCollisionFace(collisionPoint)) + unitVectorPreCollision;
         Vector3 velocityPostCollision = net.CoefficientOfRestitution * velocityMagnitudePreCollision * unitVectorPostCollision;
         _ball.LinearVelocity = velocityPostCollision;
+    }
+
+    private bool IsBallCollidingWithOppositionPlayer(Transform opp)
+    {
+        Vector3 unitVectorBallVelocity = _ball.LinearVelocity / MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
+        MyRay ray = new MyRay(_ball.transform.position, unitVectorBallVelocity, _ball.Radius);
+
+        if (ray.IntersectsWithCapsule(opp, _ball.LinearVelocity, out float t))
+        {
+            //collisionDistance = t * _ball.LinearVelocity;
+            //_ball.transform.position += collisionDistance;
+            Debug.Log("t " + t);
+            return true;
+
+        }
+
+        return false;
     }
 
     private void BallToCapsuleResponse()

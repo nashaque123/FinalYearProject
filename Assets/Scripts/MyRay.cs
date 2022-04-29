@@ -74,6 +74,87 @@ public class MyRay
         return true;
     }
 
+    //following techniques from Real Time Collision Detection by Christer Ericson
+    //checks against cylinder section of capsule
+    public bool IntersectsWithCapsule(Transform capsule, Vector3 ballVelocity, out float t)
+    {
+        t = -1f;
+        float cylinderRadius = capsule.lossyScale.x;
+        Vector3 cylinderTopFacePosition = capsule.position + new Vector3(0, capsule.lossyScale.y, 0);
+        Vector3 cylinderBottomFacePosition = capsule.position - new Vector3(0, capsule.lossyScale.y, 0);
+        Vector3 vectorFromPlaneToPlane = cylinderTopFacePosition - cylinderBottomFacePosition;
+        Vector3 vectorFromRayToBottomFace = _position - cylinderBottomFacePosition;
+
+        float md = MyMathsFunctions.CalculateDotProduct(vectorFromRayToBottomFace, vectorFromPlaneToPlane);
+        float nd = MyMathsFunctions.CalculateDotProduct(ballVelocity, vectorFromPlaneToPlane);
+        float dd = MyMathsFunctions.CalculateDotProduct(vectorFromPlaneToPlane, vectorFromPlaneToPlane);
+
+        //check if ray misses either end of cylinder
+        //lower than bottom face
+        if (md < 0f && md + nd < 0f)
+        {
+            return false;
+        }
+
+        //higher than top face
+        if (md > dd && md + nd > dd)
+        {
+            return false;
+        }
+
+        float nn = MyMathsFunctions.CalculateDotProduct(ballVelocity, ballVelocity);
+        float mn = MyMathsFunctions.CalculateDotProduct(vectorFromRayToBottomFace, ballVelocity);
+
+        //quadratic formula
+        float a = (dd * nn) - (nd * nd);
+        float factorisedPartOfC = Vector3.Dot(vectorFromRayToBottomFace, vectorFromRayToBottomFace) - (cylinderRadius * cylinderRadius);
+        float c = (dd * factorisedPartOfC) - (md * md);
+
+        //check if vectorFromPlaneToPlane and ray direction are parallel
+        if (Mathf.Abs(a) < kRoomForError)
+        {
+            //check if a is inside the cylinder
+            if (c > 0f)
+            {
+                return false;
+            }
+
+            //intersects against p
+            if (md < 0f)
+            {
+                t = -mn / nn;
+            }
+            else if (md > 0f)
+            {
+                //intersects against q;
+                t = (nd - mn) / nn;
+            }
+            else
+            {
+                //a is inside cylinder
+                t = 0;
+            }
+
+            return true;
+        }
+
+        float b = (dd * mn) - (nd * md);
+
+        if ((b * b) < (a * c))
+        {
+            //no values for t
+            //ray moving away from cylinder
+            return false;
+        }
+
+        float t1 = (-b + Mathf.Sqrt((b * b) - (4f * a * c))) / (2f * a);
+        float t2 = (-b - Mathf.Sqrt((b * b) - (4f * a * c))) / (2f * a);
+
+        t = Mathf.Min(t1, t2);
+
+        return t >= 0f && t < 1f;
+    }
+
     public Vector3 Position
     {
         get

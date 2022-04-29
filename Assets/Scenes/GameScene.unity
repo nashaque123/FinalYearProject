@@ -1478,11 +1478,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 293607682}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &299442001 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 1401392989616814857, guid: 3e0f034519e42de44af81bf324f2df22, type: 3}
-  m_PrefabInstance: {fileID: 6992141724717947068}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &313643383
 GameObject:
   m_ObjectHideFlags: 0
@@ -3227,6 +3222,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 610975417}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &625011704 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 200148302689204850, guid: 3e0f034519e42de44af81bf324f2df22, type: 3}
+  m_PrefabInstance: {fileID: 6992141724717947068}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &650565528
 GameObject:
   m_ObjectHideFlags: 0
@@ -4360,24 +4360,16 @@ MonoBehaviour:
   - {fileID: 849444550}
   - {fileID: 592218139}
   _nets:
-  - {fileID: 1543604470}
+  - {fileID: 1855450971}
   - {fileID: 359810157}
   - {fileID: 502069195}
-  - {fileID: 1855450971}
-  - {fileID: 1346467563}
+  - {fileID: 1543604470}
+  - {fileID: 1029047111}
   - {fileID: 1317765192}
   - {fileID: 828635645}
-  - {fileID: 1029047111}
-  _goalPosts:
-  - {fileID: 2141085567}
-  - {fileID: 2036141244}
-  - {fileID: 853036372}
-  - {fileID: 148975585}
-  - {fileID: 2023094522}
-  - {fileID: 2140552117}
-  - {fileID: 722588034}
-  - {fileID: 1535129581}
-  _goalkeeper: {fileID: 299442001}
+  - {fileID: 1346467563}
+  _goalPosts: []
+  _goalkeeper: {fileID: 625011704}
   WallList: {fileID: 11400000, guid: 61745539ced7256479e1951f0409949c, type: 2}
 --- !u!4 &961148770
 Transform:
