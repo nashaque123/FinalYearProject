@@ -34,6 +34,7 @@ public class AdamsMoultonSolver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //calculate values based off user input when shot is taken
         if (ShotTaken.Value)
         {
             float angleInRadians = MyMathsFunctions.ConvertDegreesToRadians(AimArrow.transform.eulerAngles.y);
@@ -52,8 +53,10 @@ public class AdamsMoultonSolver : MonoBehaviour
         counter++;
     }
 
+    //update position using adams moulton solver
     private void Move()
     {
+        //acceleration applied from magnus force
         Vector3 force = magnusForce.CalculateMagnusForce();
         Vector3 magnusAcceleration = force / _ball.Mass;
         float dragFactor = 0.5f * Air.Density * kPi * _ball.Radius * _ball.Radius * _dragCoefficient;
@@ -63,6 +66,7 @@ public class AdamsMoultonSolver : MonoBehaviour
         transform.position += _ball.LinearVelocity;
     }
 
+    //calculate velocity from user input
     private Vector3 CalculateBallLinearVelocity(float angleInRadians)
     {
         float yContactPointOnBall = _ballUI.position.y - Cursor.position.y;

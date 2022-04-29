@@ -20,6 +20,7 @@ public class MagnusForce : MonoBehaviour
         _spinRatePerPixel = CalculateSpinRatePerPixel();
     }
 
+    //calculate overall force using Kutta-Joukowski theorem
     public Vector3 CalculateMagnusForce()
     {
         Vector3 vortexStrength = 2f * kPi * _ball.Radius * _ball.Radius * _ball.AngularVelocity;
@@ -29,6 +30,7 @@ public class MagnusForce : MonoBehaviour
         return force;
     }
 
+    //calculate how much spin is applied per pixel due to size of image varying
     private float CalculateSpinRatePerPixel()
     {
         float maxAngularVelocityMagnitudeOnAxesPerSecond = 2f * kPi * kMaxRevolutionsPerSecond;
@@ -38,6 +40,7 @@ public class MagnusForce : MonoBehaviour
         return spinRatePerPixel;
     }
 
+    //user input calculates initial angular velocity
     public void CalculateBallAngularVelocity(float angleInRadians)
     {
         Vector3 differenceBetweenBallAndCursorOnAxes = _ballUI.position - Cursor.position;

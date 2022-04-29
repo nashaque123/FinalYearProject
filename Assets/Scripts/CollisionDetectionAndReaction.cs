@@ -26,6 +26,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
     {
         float ballVelocityMagnitude = MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
 
+        //if ball is moving, check for collisions against all collidable objects
         if (ballVelocityMagnitude > 0f)
         {
             foreach (GameObject opp in WallList.List)
@@ -72,6 +73,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         }
     }
 
+    //checks angle is less than 90 degrees
     private bool IsBallMovingTowardsPlane(Plane plane)
     {
         Vector3 negativeVelocity = -_ball.LinearVelocity;
@@ -106,6 +108,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         Vector3 vCol = unitVectorPreCollision * contactPointMagnitude;
         _ball.transform.position += vCol;
         float dotProductOfNormalAndNegativeUnitVector = MyMathsFunctions.CalculateDotProduct(plane.NormalToSurface, -unitVectorPreCollision);
+        //only change to overall magnitude is due to coefficient of restitution
         Vector3 unitVectorPostCollision = (2f * dotProductOfNormalAndNegativeUnitVector * plane.NormalToSurface) + unitVectorPreCollision;
         Vector3 velocityPostCollision = plane.CoefficientOfRestitution * velocityMagnitudePreCollision * unitVectorPostCollision;
         _ball.LinearVelocity = velocityPostCollision;
@@ -117,6 +120,8 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         Vector3 unitVectorBallVelocity = _ball.LinearVelocity / MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
         MyRay ray = new MyRay(_ball.transform.position, unitVectorBallVelocity, _ball.Radius);
 
+        //create raycast to see if ball will collide
+        //returns distance to collision
         if (ray.IntersectsWithNet(bounds, out float distance, out Vector3 collisionPoint))
         {
             if (distance - _ball.Radius <= MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity))
@@ -129,13 +134,12 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         return false;
     }
 
-    //handle as plane response 
+    //handle as plane response - look into updating with impulse
     private void BallToNetResponse(Net net)
     {
         float velocityMagnitudePreCollision = MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
         Vector3 unitVectorPreCollision = _ball.LinearVelocity / velocityMagnitudePreCollision;
         Vector3 collisionPoint = _ball.transform.position + (unitVectorPreCollision * _ball.Radius);
-        Debug.DrawRay(collisionPoint, net.GetNormalOfCollisionFace(collisionPoint), Color.white, 35f);
         float dotProductOfNormalAndNegativeUnitVector = MyMathsFunctions.CalculateDotProduct(net.GetNormalOfCollisionFace(collisionPoint), -unitVectorPreCollision);
         Vector3 unitVectorPostCollision = (2f * dotProductOfNormalAndNegativeUnitVector * net.GetNormalOfCollisionFace(collisionPoint)) + unitVectorPreCollision;
         Vector3 velocityPostCollision = net.CoefficientOfRestitution * velocityMagnitudePreCollision * unitVectorPostCollision;
@@ -150,6 +154,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         ImpulseCalculation(pos);
     }
 
+    //use inertia tensor to calculate total inertia of collision
     private void ImpulseCalculation(Vector3 collisionPoint)
     {
         Vector3 relativePosition = collisionPoint - _ball.transform.position;

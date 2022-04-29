@@ -25,6 +25,7 @@ public class Pause : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //get ui buttons
         GamePlaying.Value = true;
         _pauseMenuUI = GameObject.Find("Pause Menu");
         _shotPlacementMenuUI = GameObject.Find("Shot Placement Menu");
@@ -141,6 +142,7 @@ public class Pause : MonoBehaviour
         GamePlaying.Value = false;
     }
 
+    //reset all values
     private IEnumerator RestartGame()
     {
         BallInMotion.Value = false;
@@ -214,7 +216,7 @@ public class Pause : MonoBehaviour
         float zPos = (BallPlacementCursorUI.transform.localPosition.y * verticalScale) + (_pitchBounds.size.z / 4);
 
         Vector3 newPos = new Vector3(xPos, BallStartingPosition.Value.y, zPos);
-        newPos = KeepBallPositionIsOnPitch(newPos);
+        newPos = KeepBallPositionOnPitch(newPos);
 
         if (IsBallInBox(newPos))
         {
@@ -224,7 +226,8 @@ public class Pause : MonoBehaviour
         return newPos;
     }
 
-    private Vector3 KeepBallPositionIsOnPitch(Vector3 ballPosition)
+    //clamp ball position on pitch
+    private Vector3 KeepBallPositionOnPitch(Vector3 ballPosition)
     {
         if (ballPosition.x < -33.5f)
         {
@@ -247,6 +250,7 @@ public class Pause : MonoBehaviour
         return ballPosition;
     }
 
+    //if ball is in box, give penalty
     private bool IsBallInBox(Vector3 ballPosition)
     {
         Vector2 minCorner = new Vector2(-20f, 36f);

@@ -25,6 +25,7 @@ public class MyRay
             z = GetClosestIntersectionPointAtAxis(bounds, 2)
         };
 
+        //get furthest collision point distance to get collision on all axes
         collisionPointDistance = Mathf.Max(intersectionPoints.x, Mathf.Max(intersectionPoints.y, intersectionPoints.z));
         collisionPoint = CalculateCollisionPointOnAxes(collisionPointDistance);
 

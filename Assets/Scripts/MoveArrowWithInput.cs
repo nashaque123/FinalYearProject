@@ -18,6 +18,7 @@ public class MoveArrowWithInput : MonoBehaviour
         }
     }
 
+    //move arrow on user input
     private void ProcessHorizontalInput()
     {
         if (Input.GetAxis("Horizontal") > 0.5f)
@@ -35,6 +36,7 @@ public class MoveArrowWithInput : MonoBehaviour
         }
     }
 
+    //stop player from shooting backwards
     private bool IsValidAngle()
     {
         if (_newRotationY < (90f + MainCamera.transform.eulerAngles.y) % 360f || _newRotationY > (270f + MainCamera.transform.eulerAngles.y) % 360f)

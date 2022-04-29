@@ -23,6 +23,7 @@ public class FollowBallStartingPosition : MonoBehaviour
         }
     }
 
+    //keep main camera at set point behind starting position of ball
     public void SetPositionAndRotation()
     {
         Vector3 centreOfPitchPosition = new Vector3(0f, BallStartingPosition.Value.y, 0f);
@@ -32,6 +33,7 @@ public class FollowBallStartingPosition : MonoBehaviour
         Vector3 vectorFromGoalToCentreOfPitch = targetGoalPosition - centreOfPitchPosition;
         Vector3 vectorFromGoalToBall = targetGoalPosition - BallStartingPosition.Value;
 
+        //rotate to point camera towards ball
         float angleInRadians = MyMathsFunctions.CalculateAngleInRadiansBetweenVectors(vectorFromGoalToCentreOfPitch, vectorFromGoalToBall);
         float xPos, yRot;
 

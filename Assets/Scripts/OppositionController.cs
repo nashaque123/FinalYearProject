@@ -28,15 +28,16 @@ public class OppositionController : MonoBehaviour
             return;
         }
 
+        //get shot angle to goal
         Vector3 centreOfPitchPosition = new Vector3(0f, BallStartingPosition.Value.y, 0f);
         Vector3 targetGoalPosition = _targetGoal.transform.position;
         targetGoalPosition.y = BallStartingPosition.Value.y;
         Vector3 vectorFromGoalToCentreOfPitch = targetGoalPosition - centreOfPitchPosition;
         Vector3 vectorFromGoalToBall = targetGoalPosition - BallStartingPosition.Value;
-
         float angleInRadians = MyMathsFunctions.CalculateAngleInRadiansBetweenVectors(vectorFromGoalToCentreOfPitch, vectorFromGoalToBall);
         int wallSize = CalculateNumberOfPlayersInWall(vectorFromGoalToBall, angleInRadians);
 
+        //make wall face ball
         Vector3 perpendicularLine = new Vector3(vectorFromGoalToBall.z, BallStartingPosition.Value.y, -vectorFromGoalToBall.x);
         Vector3 unitVectorPerpendicular = perpendicularLine / MyMathsFunctions.CalculateVectorMagnitude(perpendicularLine);
         Vector3 startingPositionOfWall = CalculateStartingPointOfWall(vectorFromGoalToBall, wallSize, unitVectorPerpendicular);
@@ -84,6 +85,7 @@ public class OppositionController : MonoBehaviour
         }
     }
 
+    //keep centre of wall in line with ball
     private Vector3 CalculateStartingPointOfWall(Vector3 vectorFromGoalToBall, int wallSize, Vector3 unitVectorPerpendicular)
     {
         Vector3 unitVectorFromGoalToBall = vectorFromGoalToBall / MyMathsFunctions.CalculateVectorMagnitude(vectorFromGoalToBall);

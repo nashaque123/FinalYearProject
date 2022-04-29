@@ -26,6 +26,7 @@ public class CameraToggle : MonoBehaviour
 
     private void SetCameraEnabled()
     {
+        //set true for camera index and false for rest to ensure only 1 camera enabled
         for (int i = 0; i < Cameras.Length; i++)
         {
             Cameras[i].enabled = i == _cameraIndex;
