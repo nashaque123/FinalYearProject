@@ -4369,14 +4369,14 @@ MonoBehaviour:
   - {fileID: 828635645}
   - {fileID: 1029047111}
   _goalPosts:
-  - {fileID: 650565531}
-  - {fileID: 438499679}
-  - {fileID: 209266000}
-  - {fileID: 1404693459}
-  - {fileID: 1711250995}
-  - {fileID: 592032343}
-  - {fileID: 754487809}
-  - {fileID: 2033713785}
+  - {fileID: 2141085567}
+  - {fileID: 2036141244}
+  - {fileID: 853036372}
+  - {fileID: 148975585}
+  - {fileID: 2023094522}
+  - {fileID: 2140552117}
+  - {fileID: 722588034}
+  - {fileID: 1535129581}
   _goalkeeper: {fileID: 299442001}
   WallList: {fileID: 11400000, guid: 61745539ced7256479e1951f0409949c, type: 2}
 --- !u!4 &961148770
@@ -6002,8 +6002,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1543604468}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.01, y: -0.024, z: 0.73}
-  m_LocalScale: {x: 7.32, y: 0.01, z: 1.43}
+  m_LocalPosition: {x: 0, y: 0, z: 0.8}
+  m_LocalScale: {x: 7.34, y: 0.1, z: 1.6}
   m_Children: []
   m_Father: {fileID: 1353284827}
   m_RootOrder: 7
