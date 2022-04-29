@@ -82,7 +82,7 @@ public class Net : MonoBehaviour
 
     private Vector3 GetCrossProductFromVectors(Vector3 basePoint, Vector3 a, Vector3 b)
     {
-        return Vector3.Cross(a - basePoint, b - basePoint);
+        return MyMathsFunctions.CalculateCrossProduct(a - basePoint, b - basePoint);
     }
 
     private string GetFace(Vector3 collisionPoint)

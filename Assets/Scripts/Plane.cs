@@ -20,7 +20,7 @@ public class Plane : MonoBehaviour
     {
         Vector3 vector1 = Points[1] - Points[0];
         Vector3 vector2 = Points[2] - Points[0];
-        Vector3 crossProduct = Vector3.Cross(vector1, vector2);
+        Vector3 crossProduct = MyMathsFunctions.CalculateCrossProduct(vector1, vector2);
 
         _normalToSurface = crossProduct / MyMathsFunctions.CalculateVectorMagnitude(crossProduct);
     }
