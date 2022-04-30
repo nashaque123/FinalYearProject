@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Pause : MonoBehaviour
 {
-    public BooleanScriptableObject GamePlaying;
     private GameObject _pauseMenuUI;
     private GameObject _shotPlacementMenuUI;
     private Image[] _pauseMenuButtons = new Image[3];
@@ -15,18 +14,18 @@ public class Pause : MonoBehaviour
     private bool _scrollingThroughMenu = false;
     private GameObject _resultText;
     private GameObject _ball;
-    public BooleanScriptableObject BallInMotion;
     private readonly float kMenuSpeedBuffer = 0.15f;
     public GameObject BallPlacementCursorUI;
     public Vector3ScriptableObject BallStartingPosition;
     private Bounds _pitchBounds;
     public GameObject AimArrow;
+    public GameStateMachine GameState;
+    private GameState _previousGameState;
 
     // Start is called before the first frame update
     void Start()
     {
         //get ui buttons
-        GamePlaying.Value = true;
         _pauseMenuUI = GameObject.Find("Pause Menu");
         _shotPlacementMenuUI = GameObject.Find("Shot Placement Menu");
         _pauseMenuButtons[0] = GameObject.Find("Resume Button").GetComponent<Image>();
@@ -48,7 +47,7 @@ public class Pause : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GamePlaying.Value)
+        if (!GameState.Value.Equals(global::GameState.ePaused))
         {
             if (Input.GetKeyDown("joystick button 7") || Input.GetKeyDown("p"))
             {
@@ -132,20 +131,21 @@ public class Pause : MonoBehaviour
     {
         _pauseMenuUI.SetActive(false);
         yield return new WaitForSeconds(0.2f);
-        GamePlaying.Value = true;
+        GameState.Value = _previousGameState;
     }
 
     private void PauseGame()
     {
+        _previousGameState = GameState.Value;
         _pauseMenuUI.SetActive(true);
         SetMenuButtonsActive(_pauseMenuButtons);
-        GamePlaying.Value = false;
+        GameState.Value = global::GameState.ePaused;
     }
 
     //reset all values
     private IEnumerator RestartGame()
     {
-        BallInMotion.Value = false;
+        GameState.Value = global::GameState.eReadyToShoot;
         _ball.GetComponent<AdamsMoultonSolver>().Reset();
         _ball.GetComponent<TrailRenderer>().Clear();
         gameObject.GetComponent<TakeShot>().Reset();

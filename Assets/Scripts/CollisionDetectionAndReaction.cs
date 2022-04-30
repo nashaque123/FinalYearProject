@@ -160,7 +160,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         Vector3 relativePosition = collisionPoint - _ball.transform.position;
         Vector3 collisionNormal = relativePosition / MyMathsFunctions.CalculateVectorMagnitude(relativePosition);
         Vector3 totalInertia = MyMathsFunctions.CalculateCrossProduct(_ball.InertiaTensor.Inverse * MyMathsFunctions.CalculateCrossProduct(relativePosition, collisionNormal), relativePosition);
-        float impulse = -(1f + 0.2f) * MyMathsFunctions.CalculateDotProduct(-(_ball.LinearVelocity + MyMathsFunctions.CalculateCrossProduct(_ball.AngularVelocity, relativePosition)), collisionNormal) / ((1f / _ball.Mass) + MyMathsFunctions.CalculateDotProduct(totalInertia, collisionNormal));
+        float impulse = -(1f + 0.5f) * MyMathsFunctions.CalculateDotProduct(-(_ball.LinearVelocity + MyMathsFunctions.CalculateCrossProduct(_ball.AngularVelocity, relativePosition)), collisionNormal) / ((1f / _ball.Mass) + MyMathsFunctions.CalculateDotProduct(totalInertia, collisionNormal));
         _ball.LinearVelocity += -(impulse * collisionNormal) / _ball.Mass;
         _ball.AngularVelocity += _ball.InertiaTensor.Inverse * MyMathsFunctions.CalculateCrossProduct(relativePosition, -(impulse * collisionNormal));
     }

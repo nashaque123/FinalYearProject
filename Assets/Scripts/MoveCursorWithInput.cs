@@ -8,14 +8,14 @@ public class MoveCursorWithInput : MonoBehaviour
     private Rect _parentRect;
     public float MovementStepSize;
     private Vector3 _newPos;
-    public BooleanScriptableObject GamePlaying;
+    public GameStateMachine GameState;
     public bool IsEnabledWhenGameIsPlaying;
     public bool IsParentBall;
 
     // Update is called once per frame
     void Update()
     {
-        if (GamePlaying.Value.Equals(IsEnabledWhenGameIsPlaying))
+        if (!GameState.Value.Equals(global::GameState.ePaused).Equals(IsEnabledWhenGameIsPlaying))
         {
             _parentPos = transform.parent.position;
             _parentRect = transform.parent.GetComponent<RectTransform>().rect;

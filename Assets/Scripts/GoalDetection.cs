@@ -7,8 +7,8 @@ public class GoalDetection : MonoBehaviour
     public Ball Ball;
     public BoxCollider TargetGoalCollider;
     private Bounds bounds;
-    public BooleanScriptableObject BallInMotion;
     private bool _goalScored = false;
+    public GameStateMachine GameState;
 
     // Start is called before the first frame update
     void Start()
@@ -19,15 +19,15 @@ public class GoalDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (BallInMotion.Value && !_goalScored)
+        if (GameState.Value.Equals(global::GameState.eBallInMotion) && !_goalScored)
         {
             if (HasBallCrossedLine())
             {
-                //goooooooooaaaaaaaaaaaaaaaalllllllllll
+                //suiiiiiii
                 _goalScored = true;
                 StartCoroutine(DisplayResult(true));
             }
-            else if (MyMathsFunctions.CalculateVectorMagnitude(Ball.LinearVelocity) < 0.09f)
+            else if (MyMathsFunctions.CalculateVectorMagnitude(Ball.LinearVelocity) < 0.12f)
             {
                 StartCoroutine(DisplayResult(false));
             }
@@ -49,7 +49,7 @@ public class GoalDetection : MonoBehaviour
     public IEnumerator DisplayResult(bool didScore)
     {
         yield return new WaitForSeconds(1f);
-        BallInMotion.Value = false;
+        GameState.Value = global::GameState.eShotFinished;
         _goalScored = false;
         gameObject.GetComponent<Pause>().GameOver(didScore);
     }

@@ -851,15 +851,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f0f14423558ce4e949d1fb20ab53cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShotTaken: {fileID: 11400000, guid: b315ddc4fc878b54cba173abd5e98b91, type: 2}
-  BallInMotion: {fileID: 11400000, guid: 01b0a63109ff94f418fd6fe574b16615, type: 2}
   AimArrow: {fileID: 533303803}
   Cursor: {fileID: 566543455}
   Air: {fileID: 11400000, guid: d04f8ef9e0a576544b35cfd87b539080, type: 2}
   PlaySpeedBuffer: {fileID: 11400000, guid: 586fa0b2215b87f4b97d4b24ea8342c9, type: 2}
-  GamePlaying: {fileID: 11400000, guid: c8846b955202a8e458c1daa0b6cb9189, type: 2}
   ShotPower: {fileID: 11400000, guid: 2f9e614fb42ce4e40b40a75b48b7eb43, type: 2}
   BallStartingPosition: {fileID: 11400000, guid: 9a922a0faa3fe54448483f3662a7df3f, type: 2}
+  GameState: {fileID: 11400000, guid: e4060bdfba8adbd419e1d10897c96ab2, type: 2}
 --- !u!96 &187155356
 TrailRenderer:
   serializedVersion: 2
@@ -1661,7 +1659,7 @@ Transform:
   m_GameObject: {fileID: 359810155}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3.661, y: -1.19, z: 0.773}
-  m_LocalScale: {x: 0.1, y: 2.44, z: 1.5}
+  m_LocalScale: {x: 0.3, y: 2.44, z: 1.5}
   m_Children: []
   m_Father: {fileID: 1353284827}
   m_RootOrder: 5
@@ -2036,7 +2034,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementStepSize: 2
-  GamePlaying: {fileID: 11400000, guid: c8846b955202a8e458c1daa0b6cb9189, type: 2}
+  GameState: {fileID: 11400000, guid: e4060bdfba8adbd419e1d10897c96ab2, type: 2}
   IsEnabledWhenGameIsPlaying: 0
   IsParentBall: 0
 --- !u!114 &441444645
@@ -2348,7 +2346,7 @@ Transform:
   m_GameObject: {fileID: 502069193}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -3.65, y: -1.19, z: 0.773}
-  m_LocalScale: {x: 0.1, y: 2.44, z: 1.5}
+  m_LocalScale: {x: 0.3, y: 2.44, z: 1.5}
   m_Children: []
   m_Father: {fileID: 1353284827}
   m_RootOrder: 6
@@ -2462,8 +2460,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed1b6060b3c4be149a6b3b858e47e744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GamePlaying: {fileID: 11400000, guid: c8846b955202a8e458c1daa0b6cb9189, type: 2}
   MainCamera: {fileID: 963194227}
+  GameState: {fileID: 11400000, guid: e4060bdfba8adbd419e1d10897c96ab2, type: 2}
 --- !u!1 &560414244
 GameObject:
   m_ObjectHideFlags: 0
@@ -2825,7 +2823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementStepSize: 1
-  GamePlaying: {fileID: 11400000, guid: c8846b955202a8e458c1daa0b6cb9189, type: 2}
+  GameState: {fileID: 11400000, guid: e4060bdfba8adbd419e1d10897c96ab2, type: 2}
   IsEnabledWhenGameIsPlaying: 1
   IsParentBall: 1
 --- !u!1 &579511086
@@ -6108,7 +6106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Ball: {fileID: 187155357}
   TargetGoalCollider: {fileID: 1714942651}
-  BallInMotion: {fileID: 11400000, guid: 01b0a63109ff94f418fd6fe574b16615, type: 2}
+  GameState: {fileID: 11400000, guid: e4060bdfba8adbd419e1d10897c96ab2, type: 2}
 --- !u!4 &1550006145
 Transform:
   m_ObjectHideFlags: 0
@@ -6137,7 +6135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Slider: {fileID: 867478666}
   PlaySpeedBuffer: {fileID: 11400000, guid: 586fa0b2215b87f4b97d4b24ea8342c9, type: 2}
-  GamePlaying: {fileID: 11400000, guid: c8846b955202a8e458c1daa0b6cb9189, type: 2}
+  GameState: {fileID: 11400000, guid: e4060bdfba8adbd419e1d10897c96ab2, type: 2}
 --- !u!114 &1550006147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6150,11 +6148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b67fbde80624644badf4483f33732b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GamePlaying: {fileID: 11400000, guid: c8846b955202a8e458c1daa0b6cb9189, type: 2}
-  BallInMotion: {fileID: 11400000, guid: 01b0a63109ff94f418fd6fe574b16615, type: 2}
   BallPlacementCursorUI: {fileID: 441444642}
   BallStartingPosition: {fileID: 11400000, guid: 9a922a0faa3fe54448483f3662a7df3f, type: 2}
   AimArrow: {fileID: 533303803}
+  GameState: {fileID: 11400000, guid: e4060bdfba8adbd419e1d10897c96ab2, type: 2}
 --- !u!114 &1550006148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6181,9 +6178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 849e9babc2d2ade45b1786d030250e7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShotTaken: {fileID: 11400000, guid: b315ddc4fc878b54cba173abd5e98b91, type: 2}
-  BallInMotion: {fileID: 11400000, guid: 01b0a63109ff94f418fd6fe574b16615, type: 2}
-  GamePlaying: {fileID: 11400000, guid: c8846b955202a8e458c1daa0b6cb9189, type: 2}
+  GameState: {fileID: 11400000, guid: e4060bdfba8adbd419e1d10897c96ab2, type: 2}
   ShotPower: {fileID: 11400000, guid: 2f9e614fb42ce4e40b40a75b48b7eb43, type: 2}
 --- !u!114 &1550006150
 MonoBehaviour:
@@ -6725,7 +6720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba2f10667cf4714b898474a3516bb39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CoefficientOfRestitution: 0.15
+  CoefficientOfRestitution: 0.25
 --- !u!23 &1855450972
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -8,8 +8,6 @@ public class AdamsMoultonSolver : MonoBehaviour
     private readonly float kGravity = -0.1635f; // 9.81 / 60fps
     private MagnusForce magnusForce;
     private readonly float _dragCoefficient = 0.25f;
-    public BooleanScriptableObject ShotTaken;
-    public BooleanScriptableObject BallInMotion;
     public GameObject AimArrow;
     public Transform Cursor;
     private Transform _ballUI;
@@ -17,9 +15,9 @@ public class AdamsMoultonSolver : MonoBehaviour
     private readonly float kPi = 3.1415f;
     public FloatScriptableObject PlaySpeedBuffer;
     private int counter = 1;
-    public BooleanScriptableObject GamePlaying;
     public FloatScriptableObject ShotPower;
     public Vector3ScriptableObject BallStartingPosition;
+    public GameStateMachine GameState;
 
     // Start is called before the first frame update
     void Start()
@@ -35,17 +33,16 @@ public class AdamsMoultonSolver : MonoBehaviour
     void Update()
     {
         //calculate values based off user input when shot is taken
-        if (ShotTaken.Value)
+        if (GameState.Value.Equals(global::GameState.eShotTaken))
         {
             float angleInRadians = MyMathsFunctions.ConvertDegreesToRadians(AimArrow.transform.eulerAngles.y);
             _ball.LinearVelocity = CalculateBallLinearVelocity(angleInRadians);
             magnusForce.CalculateBallAngularVelocity(angleInRadians);
             AimArrow.SetActive(false);
-            ShotTaken.Value = false;
-            BallInMotion.Value = true;
+            GameState.Value = global::GameState.eBallInMotion;
         }
 
-        if (BallInMotion.Value && counter % PlaySpeedBuffer.Value == 0 && GamePlaying.Value)
+        if (GameState.Value.Equals(global::GameState.eBallInMotion) && counter % PlaySpeedBuffer.Value == 0)
         {
             Move();
         }

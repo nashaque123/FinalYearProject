@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class TakeShot : MonoBehaviour
 {
-    public BooleanScriptableObject ShotTaken;
-    public BooleanScriptableObject BallInMotion;
-    public BooleanScriptableObject GamePlaying;
+    public GameStateMachine GameState;
     public FloatScriptableObject ShotPower;
     private readonly float _powerIncreaseRate = 0.02f;
     private bool _takenShot = false;
@@ -15,15 +13,14 @@ public class TakeShot : MonoBehaviour
 
     private void Start()
     {
-        ShotTaken.Value = false;
-        BallInMotion.Value = false;
+        GameState.Value = global::GameState.eReadyToShoot;
     }
 
     // Update is called once per frame
     void Update()
     {
         //when player presses shoot, calculate angular velocity and start movement
-        if (GamePlaying.Value && !_takenShot)
+        if (!GameState.Value.Equals(global::GameState.ePaused) && !_takenShot)
         {
             if (Input.GetAxis("FireA") > 0.5f)
             {
@@ -32,7 +29,7 @@ public class TakeShot : MonoBehaviour
 
             if (Input.GetKeyUp("joystick button 0") || Input.GetKeyUp("space"))
             {
-                ShotTaken.Value = true;
+                GameState.Value = global::GameState.eShotTaken;
                 _takenShot = true;
             }
         }
