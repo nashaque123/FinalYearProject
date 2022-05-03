@@ -8,7 +8,7 @@ public class MagnusForce : MonoBehaviour
     private readonly float kPi = 3.1415f;
     public Air Air;
     private readonly float kMaxRevolutionsPerSecond = 12f;
-    private float _spinRatePerPixel;
+    private float _angularVelocityRatePerPixel;
     public Transform Cursor;
     private Transform _ballUI;
 
@@ -17,7 +17,7 @@ public class MagnusForce : MonoBehaviour
     {
         _ball = gameObject.GetComponent<Ball>();
         _ballUI = Cursor.parent;
-        _spinRatePerPixel = CalculateSpinRatePerPixel();
+        _angularVelocityRatePerPixel = CalculateAngularVelocityRatePerPixel();
     }
 
     //calculate overall force using Kutta-Joukowski theorem
@@ -31,19 +31,20 @@ public class MagnusForce : MonoBehaviour
     }
 
     //calculate how much spin is applied per pixel due to size of image varying
-    private float CalculateSpinRatePerPixel()
+    private float CalculateAngularVelocityRatePerPixel()
     {
         float maxAngularVelocityMagnitudeOnAxesPerSecond = 2f * kPi * kMaxRevolutionsPerSecond;
-        float maxSpinRatePerFrame = maxAngularVelocityMagnitudeOnAxesPerSecond / 60f;
-        float spinRatePerPixel = maxSpinRatePerFrame / (_ballUI.GetComponent<RectTransform>().rect.width / 2f);
+        float maxAngularVelocityRatePerFrame = maxAngularVelocityMagnitudeOnAxesPerSecond / 60f;
+        float angularVelocityRatePerPixel = maxAngularVelocityRatePerFrame / (_ballUI.GetComponent<RectTransform>().rect.width / 2f);
 
-        return spinRatePerPixel;
+        return angularVelocityRatePerPixel;
     }
 
     //user input calculates initial angular velocity
     public void CalculateBallAngularVelocity(float angleInRadians)
     {
         Vector3 differenceBetweenBallAndCursorOnAxes = _ballUI.position - Cursor.position;
-        _ball.AngularVelocity = new Vector3(_spinRatePerPixel * differenceBetweenBallAndCursorOnAxes.x * Mathf.Cos(angleInRadians), _spinRatePerPixel * 0.35f * differenceBetweenBallAndCursorOnAxes.y, _spinRatePerPixel * -differenceBetweenBallAndCursorOnAxes.x * Mathf.Sin(angleInRadians));
+        //max revolutions per second on y axis roughly 4
+        _ball.AngularVelocity = new Vector3(_angularVelocityRatePerPixel * differenceBetweenBallAndCursorOnAxes.x * Mathf.Cos(angleInRadians), _angularVelocityRatePerPixel * 0.35f * differenceBetweenBallAndCursorOnAxes.y, _angularVelocityRatePerPixel * -differenceBetweenBallAndCursorOnAxes.x * Mathf.Sin(angleInRadians));
     }
 }

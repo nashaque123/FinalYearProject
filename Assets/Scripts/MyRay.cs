@@ -16,7 +16,8 @@ public class MyRay
     private readonly float kBallRadius;
     private readonly float kRoomForError = 0.0001f;
 
-    public bool IntersectsWithNet(Bounds bounds, out float collisionPointDistance, out Vector3 collisionPoint)
+    //intersects with axis aligned bounding box
+    public bool IntersectsWithAABB(Bounds bounds, out float collisionPointDistance, out Vector3 collisionPoint)
     {
         Vector3 intersectionPoints = new Vector3
         {
@@ -34,7 +35,7 @@ public class MyRay
             return false;
         }
 
-        return IsCollisionPointOnNet(collisionPoint, bounds);
+        return IsCollisionPointOnAABB(collisionPoint, bounds);
     }
 
     //use [0], [1], [2] to access x, y, z components
@@ -59,7 +60,7 @@ public class MyRay
         return _position + (_direction * collisionPointDistance);
     }
 
-    private bool IsCollisionPointOnNet(Vector3 collisionPoint, Bounds bounds)
+    private bool IsCollisionPointOnAABB(Vector3 collisionPoint, Bounds bounds)
     {
         for (int i = 0; i < 3; i++)
         {

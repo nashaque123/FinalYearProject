@@ -31,20 +31,20 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         {
             foreach (GameObject opp in WallList.List)
             {
-                if (IsBallCollidingWithNet(opp.GetComponent<MeshRenderer>()))
+                if (IsBallCollidingWithAABB(opp.GetComponent<MeshRenderer>()))
                 {
                     BallToCapsuleResponse();
                 }
             }
 
-            if (IsBallCollidingWithNet(_goalkeeper))
+            if (IsBallCollidingWithAABB(_goalkeeper))
             {
                 BallToCapsuleResponse();
             }
 
             foreach (Net net in _nets)
             {
-                if (IsBallCollidingWithNet(net.GetComponent<Renderer>()))
+                if (IsBallCollidingWithAABB(net.GetComponent<Renderer>()))
                 {
                     BallToNetResponse(net);
                 }
@@ -52,7 +52,7 @@ public class CollisionDetectionAndReaction : MonoBehaviour
 
             foreach (Renderer post in _goalPosts)
             {
-                if (IsBallCollidingWithNet(post))
+                if (IsBallCollidingWithAABB(post))
                 {
                     BallToCapsuleResponse();
                 }
@@ -114,15 +114,15 @@ public class CollisionDetectionAndReaction : MonoBehaviour
         _ball.LinearVelocity = velocityPostCollision;
     }
 
-    private bool IsBallCollidingWithNet(Renderer net)
+    private bool IsBallCollidingWithAABB(Renderer boundingBox)
     {
-        Bounds bounds = net.bounds;
+        Bounds bounds = boundingBox.bounds;
         Vector3 unitVectorBallVelocity = _ball.LinearVelocity / MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity);
         MyRay ray = new MyRay(_ball.transform.position, unitVectorBallVelocity, _ball.Radius);
 
         //create raycast to see if ball will collide
         //returns distance to collision
-        if (ray.IntersectsWithNet(bounds, out float distance, out Vector3 collisionPoint))
+        if (ray.IntersectsWithAABB(bounds, out float distance, out Vector3 collisionPoint))
         {
             if (distance - _ball.Radius <= MyMathsFunctions.CalculateVectorMagnitude(_ball.LinearVelocity))
             {
